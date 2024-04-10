@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "desa-digital",
+    "slug": "desa-digital",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/desaku.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0890EA"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/desaku.png",
+        "backgroundColor": "#0890EA"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
