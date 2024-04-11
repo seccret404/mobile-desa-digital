@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native'
-import HeaderKegiatan from '../../components/layout/headerkegiatan'
+import HeaderKegiatan from '../../components/layout/headerorganisasi'
 import { FontAwesome } from '@expo/vector-icons';
 export default function AgendaDesa({ navigation }) {
      const goDetail = () =>{

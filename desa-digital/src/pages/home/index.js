@@ -15,7 +15,7 @@
           const [numColumns, setNumColumns] = useState(3);
           const menu = [
                { key: 1, icon: <AgendaIcon />, namaMenu: 'Agenda Desa', route: 'agenda' },
-               { key: 2, icon: <OrganisasiIcon />, namaMenu: 'Organisasi Desa', route: '/' },
+               { key: 2, icon: <OrganisasiIcon />, namaMenu: 'Organisasi Desa', route: 'organisasi' },
                { key: 3, icon: <PengumumanIcon />, namaMenu: 'Pengumuman', route: '/' },
 
                { key: 4, icon: <PendudukIcon />, namaMenu: 'Data Penduduk', route: '/' },

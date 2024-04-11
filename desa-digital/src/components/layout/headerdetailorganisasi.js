@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
-export default function HeaderKegiatan({ navigation }) {
+export default function HeaderOrganisasiDetail({ navigation }) {
      const goHome = () => {
-          navigation.navigate('home');
+          navigation.navigate('organisai');
      };
      return (
           <View style={styles.header}>
@@ -15,7 +15,7 @@ export default function HeaderKegiatan({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         Kegiatan Desa
+                         Detail Organisasi 
                     </Text>
                </View>
 

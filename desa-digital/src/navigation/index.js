@@ -7,6 +7,8 @@ import Home from '../pages/home';
 import Welcome from '../pages/onboarding';
 import AgendaDesa from '../pages/agenda';
 import AgendaDetail from '../pages/agenda/detail';
+import Organisasi from '../pages/organisasi';
+import DetailOrganisasi from '../pages/organisasi/detail';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,8 @@ export default function AppNavigation() {
         <Stack.Screen name='home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='agenda' component={AgendaDesa} options={{ headerShown: false }} />
         <Stack.Screen name='agenda-detail' component={AgendaDetail} options={{ headerShown: false }} />
+        <Stack.Screen name='organisasi' component={Organisasi} options={{ headerShown: false }} />
+        <Stack.Screen name='organisasi-detail' component={DetailOrganisasi} options={{ headerShown: false }} />
       </Stack.Navigator>
       <StatusBar backgroundColor='#ffffff' style='dark' translucent={false} />
     </NavigationContainer>
