@@ -16,11 +16,11 @@
           const menu = [
                { key: 1, icon: <AgendaIcon />, namaMenu: 'Agenda Desa', route: 'agenda' },
                { key: 2, icon: <OrganisasiIcon />, namaMenu: 'Organisasi Desa', route: 'organisasi' },
-               { key: 3, icon: <PengumumanIcon />, namaMenu: 'Pengumuman', route: '/' },
+               { key: 3, icon: <PengumumanIcon />, namaMenu: 'Pengumuman', route: 'pengumuman' },
 
                { key: 4, icon: <PendudukIcon />, namaMenu: 'Data Penduduk', route: '/' },
-               { key: 5, icon: <ApbdesIcon />, namaMenu: 'ABDes', route: '/' },
-               { key: 6, icon: <BeritaIcon />, namaMenu: 'Berita Desa', route: '/' }
+               { key: 5, icon: <ApbdesIcon />, namaMenu: 'ABDes', route: 'anggaran' },
+               { key: 6, icon: <BeritaIcon />, namaMenu: 'Berita Desa', route: 'berita' }
           ];
 
           const handleMenu = (route) => {

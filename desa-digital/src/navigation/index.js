@@ -9,7 +9,12 @@ import AgendaDesa from '../pages/agenda';
 import AgendaDetail from '../pages/agenda/detail';
 import Organisasi from '../pages/organisasi';
 import DetailOrganisasi from '../pages/organisasi/detail';
-
+import Pengumuman from '../pages/pengumuman';
+import DetailPengumuman from '../pages/pengumuman/detail';
+import Anggaran from '../pages/apbdes';
+import DetailApbdes from '../pages/apbdes/detail';
+import Berita from '../pages/berita';
+import DetailBerita from '../pages/berita/detailBerita';
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -37,6 +42,13 @@ export default function AppNavigation() {
         <Stack.Screen name='agenda-detail' component={AgendaDetail} options={{ headerShown: false }} />
         <Stack.Screen name='organisasi' component={Organisasi} options={{ headerShown: false }} />
         <Stack.Screen name='organisasi-detail' component={DetailOrganisasi} options={{ headerShown: false }} />
+        <Stack.Screen name='detail-pengumuman' component={DetailPengumuman} options={{ headerShown: false }} />
+        <Stack.Screen name='pengumuman' component={Pengumuman} options={{ headerShown: false }} />
+        <Stack.Screen name='anggaran' component={Anggaran} options={{ headerShown: false }} />
+        <Stack.Screen name='anggaran-detail' component={DetailApbdes} options={{ headerShown: false }} />
+        <Stack.Screen name='berita' component={Berita} options={{ headerShown: false }} />
+        <Stack.Screen name='detail-berita' component={DetailBerita} options={{ headerShown: false }} />
+
       </Stack.Navigator>
       <StatusBar backgroundColor='#ffffff' style='dark' translucent={false} />
     </NavigationContainer>
