@@ -15,6 +15,9 @@ import Anggaran from '../pages/apbdes';
 import DetailApbdes from '../pages/apbdes/detail';
 import Berita from '../pages/berita';
 import DetailBerita from '../pages/berita/detailBerita';
+import Penduduk from '../pages/penduduk';
+import DusunDetail from '../pages/penduduk/detailDusun';
+import PendudukDetail from '../pages/penduduk/detailPenduduk';
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -48,6 +51,9 @@ export default function AppNavigation() {
         <Stack.Screen name='anggaran-detail' component={DetailApbdes} options={{ headerShown: false }} />
         <Stack.Screen name='berita' component={Berita} options={{ headerShown: false }} />
         <Stack.Screen name='detail-berita' component={DetailBerita} options={{ headerShown: false }} />
+        <Stack.Screen name='penduduk' component={Penduduk} options={{ headerShown: false }} />
+        <Stack.Screen name='detail-dusun' component={DusunDetail} options={{ headerShown: false }} />
+        <Stack.Screen name='detail-penduduk' component={PendudukDetail} options={{ headerShown: false }} />
 
       </Stack.Navigator>
       <StatusBar backgroundColor='#ffffff' style='dark' translucent={false} />
