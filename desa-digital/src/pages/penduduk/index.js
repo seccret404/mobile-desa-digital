@@ -12,7 +12,7 @@ export default function Penduduk({navigation}) {
      return (
           <View style={styles.container}>
                <HeaderPenduduk navigation={navigation} />
-               <Image source={require('../../../assets/penduduk.png')} />
+               <Image source={require('../../../assets/penduduk.png')} style={styles.img}/>
                <View style={styles.content}>
                     <Text style={styles.bigTitle}>Statistik Data Penduduk Desa Sosor Dolok</Text>
                     <ScrollView>
@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
      namaDusun:{
           marginLeft:20,
           fontSize:18
+     },
+     img:{
+          width:'full'
      }
 
 })

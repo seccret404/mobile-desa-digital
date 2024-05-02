@@ -19,7 +19,7 @@ export default function PendudukDetail(navigation) {
                               <Text style={{ fontSize: 18, color: '#ffffff', fontWeight: '600' }}>Jenis Kelamin</Text>
                            
                                    <View style={styles.border}>
-                                        <View style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
+                                        <View style={{flex:1,display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                                         <DoughnutChart data={data} />
                                         </View>
                                         <View style={styles.boxInfo}>

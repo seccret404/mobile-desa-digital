@@ -10,7 +10,7 @@ export default function Anggaran({navigation}){
           <View style={styles.container}>
                <HeaderAnggaran navigation={navigation}/>
                <View style={styles.content}>
-                    <Image source={require('../../../assets/anggaran.png')}/>
+                    <Image source={require('../../../assets/anggaran.png')} style={styles.img}/>
                     <Text style={styles.bigTitle}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun 2024</Text>
                     <ScrollView>
                          <TouchableOpacity onPress={detail}>
@@ -78,5 +78,8 @@ const styles = StyleSheet.create({
           paddingBottom:5,
           marginTop:26
        
+     },
+     img:{
+          width:'full'
      }
 })

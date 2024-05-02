@@ -20,17 +20,15 @@ const DoughnutChart = ({ data }) => {
                     strokeWidth={strokeWidth}
                     strokeDasharray={dasharray}
                     strokeDashoffset={offset}
-
                     fill="none"
                />
           );
           offset -= circumference * item.percentage / 100;
           return circle;
      });
-
      return (
           <View>
-               <Svg height="130" width="130">
+               <Svg height="100" width="100">
                     {circles}
                </Svg>
           </View>

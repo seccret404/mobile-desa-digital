@@ -18,7 +18,8 @@ export default function AgendaDesa({ navigation }) {
                          <FontAwesome name='search' size={18} color='grey' style={styles.search} />
                     </View>
                     {/* card agenda */}
-                    <ScrollView >
+                    <ScrollView  >
+                         <View style={styles.boxAgenda}>
                          <View style={{marginBottom:10}}>
                               <View style={styles.cardNews}>
                               <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
@@ -112,6 +113,7 @@ export default function AgendaDesa({ navigation }) {
                          </View>
                          </View>
                          
+                         </View>
                     </ScrollView>
 
                </View>
@@ -196,4 +198,10 @@ const styles = StyleSheet.create({
           color: '#ffffff',
           fontSize: 12,
      },
+     boxAgenda:{
+          display:'flex',
+          flexDirection:'column',
+          justifyContent:'center',
+          alignItems:'center',
+     }
 })

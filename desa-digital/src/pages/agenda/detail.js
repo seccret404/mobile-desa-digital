@@ -20,7 +20,7 @@ export default function AgendaDetail({ navigation }) {
                <View style={styles.content}>
                     <ScrollView>
                          <View style={styles.boxContent}>
-                              <Image source={require('../../../assets/kegiatan/agenda22.png')} width={329} height={182} borderRadius={5} />
+                              <Image source={require('../../../assets/kegiatan/agenda22.png')} style={styles.img} height={182} borderRadius={5} />
                               <Text style={styles.title}>Sosialisasi Perhitungan Suara Pilpres</Text>
                               <Text style={styles.waktu}>15-03-2024</Text>
                               <View style={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
@@ -51,7 +51,7 @@ export default function AgendaDetail({ navigation }) {
 
                                         keyExtractor={(item) => item.id}
                                         renderItem={({ item }) => (
-                                             <Image source={item.image} style={{ margin: 2 }} width={330} />
+                                             <Image source={item.image} style={{ margin: 2 }} width={350} />
                                         )}
                                    />
                               </View>
@@ -65,12 +65,13 @@ export default function AgendaDetail({ navigation }) {
 
                               </View>
 
-                              <View style={styles.anggaran}>
+                             <View style={styles.boxAnggaran1}>
+                             <View style={styles.anggaran}>
                                    <View style={styles.box}>
                                         <Text style={{color:'#ffffff',fontSize:14,textAlign:'center',marginBottom:5}}>Anggaran Desa</Text>
                                         <View style={styles.boxAnggaran}>
                                              <Text style={{padding:5,textAlign:'center'}}>
-                                                  RP.100.000.000
+                                                  Rp 100.000.000
                                              </Text>
                                         </View>
                                    </View>
@@ -78,11 +79,12 @@ export default function AgendaDetail({ navigation }) {
                                         <Text style={{color:'#ffffff',fontSize:14,textAlign:'center',marginBottom:5}}>Donasi</Text>
                                         <View style={styles.boxAnggaran}>
                                              <Text style={{padding:5,textAlign:'center'}}>
-                                                  RP.50.000.000
+                                                  Rp 50.000.000
                                              </Text>
                                         </View>
                                    </View>
                               </View>
+                             </View>
                          </View>
                     </ScrollView>
                </View>
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
           display:'flex',
           flexDirection:'row',
           justifyContent:'space-around',
+          alignItems:'center',
           
      },
      boxAnggaran:{
@@ -152,5 +155,14 @@ const styles = StyleSheet.create({
      },
      box:{
        marginTop:21,marginBottom:21
+     },
+     img:{
+          width:'full'
+     },
+     boxAnggaran1:{
+          display:'flex',
+          flexDirection:"column",
+          justifyContent:'center',
+          alignItems:'center'
      }
 })
