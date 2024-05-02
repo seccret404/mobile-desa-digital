@@ -12,10 +12,12 @@ export default function Footer({ navigation }) {
      const GoPotensi = () =>{
           navigation.navigate('potensi')
      }
-
+     const GoWisata = () =>{
+          navigation.navigate('wisata');
+     }
      return (
           <View style={styles.Container}>
-               <TouchableOpacity onPress={GoPotensi}>
+               <TouchableOpacity onPress={GoHome}>
                     <View style={styles.menuContainer}>
                          <FontAwesome name="home" size={24} color="#B3B9C6" />
                          <Text style={styles.captionMenu}>
@@ -23,7 +25,7 @@ export default function Footer({ navigation }) {
                          </Text>
                     </View>
                </TouchableOpacity>
-               <TouchableOpacity onPress={GoHome}>
+               <TouchableOpacity onPress={GoWisata}>
                     <View style={styles.menuContainer}>
                          <FontAwesome name='image' size={24} color='#B3B9C6' />
                          <Text style={styles.captionMenu}>
@@ -41,7 +43,7 @@ export default function Footer({ navigation }) {
                </TouchableOpacity>
                <TouchableOpacity>
                     <View style={styles.menuContainer}>
-                         <FontAwesome name='' size={24} color="#B3B9C6" />
+                         <FontAwesome name='tag' size={24} color="#B3B9C6" />
                          <Text style={styles.captionMenu}>
                               UMKM
                          </Text>

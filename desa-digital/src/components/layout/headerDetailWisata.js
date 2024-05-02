@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
-export default function HeaderWisata({ navigation }) {
+export default function HeaderDetailWisata({ navigation }) {
      const navigateHome = () => {
-          navigation.navigate('home');
+          navigation.navigate('wisata');
      };
      return (
           <View style={styles.header}>
@@ -15,7 +15,7 @@ export default function HeaderWisata({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         Objek Wisata
+                        Detail Objek Wisata
                     </Text>
                </View>
 

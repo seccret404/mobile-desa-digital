@@ -139,7 +139,7 @@ export default function Home({ navigation }) {
                </ScrollView>
 
 
-               <Footer />
+               <Footer navigation={navigation} />
           </View>
      )
 }
