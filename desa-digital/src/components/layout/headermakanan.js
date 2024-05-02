@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
-export default function HeaderUMKM({ navigation }) {
+export default function HeaderMakanan({ navigation }) {
      const navigateHome = () => {
-          navigation.navigate('home');
+          navigation.navigate('umkm');
      };
      return (
           <View style={styles.header}>
@@ -15,7 +15,7 @@ export default function HeaderUMKM({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         UMKM
+                         Makanan
                     </Text>
                </View>
 
@@ -30,12 +30,10 @@ const styles = StyleSheet.create({
           paddingVertical: 20,
           alignItems: 'center',
           justifyContent: 'center'
-
      },
      title: {
           fontSize: 20,
           color: '#ffffff',
-
      },
      logo: {
           left: 0,

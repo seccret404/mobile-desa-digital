@@ -20,6 +20,18 @@ import DusunDetail from '../pages/penduduk/detailDusun';
 import PendudukDetail from '../pages/penduduk/detailPenduduk';
 import Wisata from '../pages/potensi/wisata';
 import DetailWisata from '../pages/potensi/wisata/detail';
+import UMKM from '../pages/potensi/umkm';
+import UmkmMakanan from '../pages/potensi/umkm/makanan';
+import UmkmSuvenir from '../pages/potensi/umkm/suvenir';
+import UmkmPakaian from '../pages/potensi/umkm/pakaian';
+import Fasilitas from '../pages/potensi/fasilitas';
+import Homestay from '../pages/potensi/fasilitas/homestay';
+import DetailHomestay from '../pages/potensi/fasilitas/detailHomestay';
+import Ibadah from '../pages/potensi/fasilitas/ibadah';
+import DetailIbadah from '../pages/potensi/fasilitas/detailIbadah';
+import Profile from '../pages/desa/profile';
+import Pemerintahan from '../pages/desa/pemerintahan';
+import DetailMakanan from '../pages/potensi/umkm/detailMakanan';
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -58,6 +70,18 @@ export default function AppNavigation() {
         <Stack.Screen name='detail-penduduk' component={PendudukDetail} options={{ headerShown: false }} />
         <Stack.Screen name='wisata' component={Wisata} options={{headerShown:false}} />
         <Stack.Screen name='detail-wisata' component={DetailWisata} options={{headerShown:false}} />
+        <Stack.Screen name='umkm' component={UMKM} options={{headerShown:false}} />
+        <Stack.Screen name='umkm-makanan' component={UmkmMakanan} options={{headerShown:false}} />
+        <Stack.Screen name='detail-makanan' component={DetailMakanan} options={{headerShown:false}} />
+        <Stack.Screen name='umkm-suvenir' component={UmkmSuvenir} options={{headerShown:false}} />
+        <Stack.Screen name='umkm-pakaian' component={UmkmPakaian} options={{headerShown:false}} />
+        <Stack.Screen name='fasilitas' component={Fasilitas} options={{headerShown:false}} />
+        <Stack.Screen name='homestay' component={Homestay} options={{headerShown:false}} />
+        <Stack.Screen name='detail-homestay' component={DetailHomestay} options={{headerShown:false}} />
+        <Stack.Screen name='ibadah' component={Ibadah} options={{headerShown:false}} />
+        <Stack.Screen name='detail-ibadah' component={DetailIbadah} options={{headerShown:false}} />
+        <Stack.Screen name='profile' component={Profile} options={{headerShown:false}} />
+        <Stack.Screen name='pemerintahan' component={Pemerintahan} options={{headerShown:false}} />
       </Stack.Navigator>
       <StatusBar backgroundColor='#ffffff' style='dark' translucent={false} />
     </NavigationContainer>

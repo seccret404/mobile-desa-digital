@@ -7,13 +7,16 @@ export default function Footer({ navigation }) {
           navigation.navigate('home')
      }
      const GoProfilDesa = () => {
-          navigation.navigate('profildesa')
+          navigation.navigate('profile')
      }
-     const GoPotensi = () =>{
-          navigation.navigate('potensi')
+     const GoUMKM = () =>{
+          navigation.navigate('umkm')
      }
      const GoWisata = () =>{
           navigation.navigate('wisata');
+     }
+     const GoFasilitas = () =>{
+          navigation.navigate('fasilitas');
      }
      return (
           <View style={styles.Container}>
@@ -33,7 +36,7 @@ export default function Footer({ navigation }) {
                          </Text>
                     </View>
                </TouchableOpacity>
-               <TouchableOpacity onPress={GoHome}>
+               <TouchableOpacity onPress={GoFasilitas}>
                     <View style={styles.menuContainer}>
                          <FontAwesome name='road' size={24} color='#B3B9C6' />
                          <Text style={styles.captionMenu}>
@@ -41,7 +44,7 @@ export default function Footer({ navigation }) {
                          </Text>
                     </View>
                </TouchableOpacity>
-               <TouchableOpacity>
+               <TouchableOpacity onPress={GoUMKM}>
                     <View style={styles.menuContainer}>
                          <FontAwesome name='tag' size={24} color="#B3B9C6" />
                          <Text style={styles.captionMenu}>
@@ -49,7 +52,7 @@ export default function Footer({ navigation }) {
                          </Text>
                     </View>
                </TouchableOpacity>
-               <TouchableOpacity>
+               <TouchableOpacity onPress={GoProfilDesa}>
                     <View style={styles.menuContainer}>
                          <FontAwesome name='map' size={24} color="#B3B9C6" />
                          <Text style={styles.captionMenu}>

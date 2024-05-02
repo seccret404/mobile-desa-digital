@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
-export default function HeaderUMKM({ navigation }) {
+export default function HeaderPemerintahan({ navigation }) {
      const navigateHome = () => {
           navigation.navigate('home');
      };
@@ -15,7 +15,7 @@ export default function HeaderUMKM({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         UMKM
+                         Struktur Pemerintahan
                     </Text>
                </View>
 
