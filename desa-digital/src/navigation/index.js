@@ -32,6 +32,7 @@ import DetailIbadah from '../pages/potensi/fasilitas/detailIbadah';
 import Profile from '../pages/desa/profile';
 import Pemerintahan from '../pages/desa/pemerintahan';
 import DetailMakanan from '../pages/potensi/umkm/detailMakanan';
+
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "rea
 import HeaderPenduduk from "../../components/layout/headerPenduduk";
 import DoughnutChart from "../../components/ui/diagram";
 
-export default function DusunDetail(navigation) {
+export default function DusunDetail({navigation}) {
      const data = [
           { color: '#D6AC42', percentage: 50 },
           { color: '#9A701F', percentage: 50 },

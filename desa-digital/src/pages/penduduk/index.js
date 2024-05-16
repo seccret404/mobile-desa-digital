@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
-import HeaderPenduduk from "../../components/layout/headerPenduduk";
+import HeaderPendudukUtama from "../../components/layout/headerUtamaPenduduk";
 import DusunIcon from "../../components/icon/dusun";
 export default function Penduduk({navigation}) {
      const goDusun = () =>{
@@ -11,7 +11,7 @@ export default function Penduduk({navigation}) {
      }
      return (
           <View style={styles.container}>
-               <HeaderPenduduk navigation={navigation} />
+               <HeaderPendudukUtama navigation={navigation} />
                <Image source={require('../../../assets/penduduk.png')} style={styles.img}/>
                <View style={styles.content}>
                     <Text style={styles.bigTitle}>Statistik Data Penduduk Desa Sosor Dolok</Text>

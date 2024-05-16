@@ -17,7 +17,6 @@ export default function Home({ navigation }) {
           { key: 1, icon: <AgendaIcon />, namaMenu: 'Agenda Desa', route: 'agenda' },
           { key: 2, icon: <OrganisasiIcon />, namaMenu: 'Organisasi Desa', route: 'organisasi' },
           { key: 3, icon: <PengumumanIcon />, namaMenu: 'Pengumuman', route: 'pengumuman' },
-
           { key: 4, icon: <PendudukIcon />, namaMenu: 'Data Penduduk', route: 'penduduk' },
           { key: 5, icon: <ApbdesIcon />, namaMenu: 'ABDes', route: 'anggaran' },
           { key: 6, icon: <BeritaIcon />, namaMenu: 'Berita Desa', route: 'berita' }
@@ -37,7 +36,6 @@ export default function Home({ navigation }) {
                </View>
           </TouchableOpacity>
      )
-
      return (
           <View style={styles.container}>
                <HeaderHome />
@@ -69,7 +67,6 @@ export default function Home({ navigation }) {
                               <Underline />
                          </View>
                          <Text style={{ fontSize: 18, fontWeight: '700', paddingLeft: 20, marginTop: 15 }}>Informasi Desa</Text>
-
                          {/* menu container */}
                          <View >
                               <FlatList
@@ -78,16 +75,12 @@ export default function Home({ navigation }) {
                                    numColumns={numColumns}
                               />
                          </View>
-
-
                          <View>
                               <View style={styles.titleNews}>
                                    <Text style={styles.textTitleNews}>Berita Desa terbaru</Text>
                               </View>
                               <View style={styles.boxCard}>
                                    {/* berita desa */}
-
-
                                    <View style={styles.cardNews}>
                                         <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
                                              <Image source={require('../../../assets/Berita/berita.png')} width={95} height={95} borderRadius={5} />
@@ -104,8 +97,6 @@ export default function Home({ navigation }) {
                                         </View>
                                    </View>
                               </View>
-
-
                               {/* Agenda Desa */}
                               <View style={styles.titleNews}>
                                    <Text style={styles.textTitleNews}>Agenda Desa terbaru</Text>
@@ -129,16 +120,10 @@ export default function Home({ navigation }) {
                                         </View>
                                    </View>
                               </View>
-
-
-
-
                          </View>
 
                     </View>
                </ScrollView>
-
-
                <Footer navigation={navigation} />
           </View>
      )
@@ -148,7 +133,8 @@ const styles = StyleSheet.create({
      container: {
           flex: 1,
           flexDirection: 'column',
-          justifyContent: 'space-between', backgroundColor: '#ffffff',
+          justifyContent: 'space-between',
+          backgroundColor: '#ffffff',
      },
      content: {
           flex: 1,

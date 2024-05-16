@@ -1,6 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import HomeIcon from '../icon/home';
+import WisataIcon from '../icon/wisata';
+import FasilitasIcon from '../icon/fasilitas';
+import UmkmIcon from '../icon/umkm';
+import ProfilIcon from '../icon/profil';
 
 export default function Footer({ navigation }) {
      const GoHome = () => {
@@ -22,7 +27,7 @@ export default function Footer({ navigation }) {
           <View style={styles.Container}>
                <TouchableOpacity onPress={GoHome}>
                     <View style={styles.menuContainer}>
-                         <FontAwesome name="home" size={24} color="#B3B9C6" />
+                         <HomeIcon size={27}/>
                          <Text style={styles.captionMenu}>
                               Beranda
                          </Text>
@@ -30,7 +35,7 @@ export default function Footer({ navigation }) {
                </TouchableOpacity>
                <TouchableOpacity onPress={GoWisata}>
                     <View style={styles.menuContainer}>
-                         <FontAwesome name='image' size={24} color='#B3B9C6' />
+                         <WisataIcon size={27}/>
                          <Text style={styles.captionMenu}>
                               Objek Wisata
                          </Text>
@@ -38,7 +43,7 @@ export default function Footer({ navigation }) {
                </TouchableOpacity>
                <TouchableOpacity onPress={GoFasilitas}>
                     <View style={styles.menuContainer}>
-                         <FontAwesome name='road' size={24} color='#B3B9C6' />
+                         <FasilitasIcon size={27}/>
                          <Text style={styles.captionMenu}>
                               Fasilitas
                          </Text>
@@ -46,7 +51,7 @@ export default function Footer({ navigation }) {
                </TouchableOpacity>
                <TouchableOpacity onPress={GoUMKM}>
                     <View style={styles.menuContainer}>
-                         <FontAwesome name='tag' size={24} color="#B3B9C6" />
+                         <UmkmIcon size={27} />
                          <Text style={styles.captionMenu}>
                               UMKM
                          </Text>
@@ -54,11 +59,12 @@ export default function Footer({ navigation }) {
                </TouchableOpacity>
                <TouchableOpacity onPress={GoProfilDesa}>
                     <View style={styles.menuContainer}>
-                         <FontAwesome name='map' size={24} color="#B3B9C6" />
+                         <ProfilIcon size={27} />
                          <Text style={styles.captionMenu}>
                               Profil Desa
                          </Text>
                     </View>
+                   
                </TouchableOpacity>
 
           </View>
@@ -81,5 +87,6 @@ const styles = StyleSheet.create({
      captionMenu: {
           fontSize: 11,
           color: '#667085'
-     }
+     },
+     
 });

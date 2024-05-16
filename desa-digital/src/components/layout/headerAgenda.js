@@ -1,21 +1,23 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { IconButton } from 'react-native-paper';
 import ArrowIcon from '../../components/icon/arrowLeft';
 
-export default function HeaderDetailWisata({ navigation }) {
-     const navigateHome = () => {
-          navigation.navigate('wisata');
+export default function HeaderAgenda({ navigation }) {
+     const goHome = () => {
+          navigation.navigate('home');
      };
      return (
           <View style={styles.header}>
                <View style={styles.logo}>
-                    <TouchableOpacity onPress={navigateHome}>
-                    <ArrowIcon size={34}  color="#ffffff" />
+                    <TouchableOpacity onPress={goHome}>
+                      
+                       <ArrowIcon size={34}  color="#ffffff" />
                     </TouchableOpacity>
                </View>
                <View>
                     <Text style={styles.title}>
-                        Detail Objek Wisata
+                         Agenda Desa 
                     </Text>
                </View>
 

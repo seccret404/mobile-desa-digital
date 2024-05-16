@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet,ScrollView  } from "react-native";
 import HeaderAnggaran from "../../components/layout/headerdetailapbdes";
-export default function DetailApbdes(){
+export default function DetailApbdes({navigation}){
      return(
           <View style={styles.container}>
-               <HeaderAnggaran/>
+               <HeaderAnggaran navigation={navigation}/>
                <View style={styles.content}>
                     <ScrollView>
                           <View>

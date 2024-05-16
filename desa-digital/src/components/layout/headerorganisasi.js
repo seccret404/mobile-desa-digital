@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
+import ArrowIcon from '../../components/icon/arrowLeft';
 
 export default function HeaderOrganisasi({ navigation }) {
      const goHome = () => {
@@ -10,7 +10,7 @@ export default function HeaderOrganisasi({ navigation }) {
           <View style={styles.header}>
                <View style={styles.logo}>
                     <TouchableOpacity onPress={goHome}>
-                         <FontAwesome name='arrow-left' size={24} color='#ffffff' />
+                    <ArrowIcon size={34}  color="#ffffff" />
                     </TouchableOpacity>
                </View>
                <View>
