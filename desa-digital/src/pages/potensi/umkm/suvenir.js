@@ -1,35 +1,70 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, ActivityIndicator } from 'react-native';
 import MapIcon from '../../../components/icon/map';
-import suvenir from '../../../../assets/umkm/makanan/suvenir.png';
 import HeaderSuvenir from '../../../components/layout/headerSuvenir';
-
+import { getUmkmSuvenir } from '../../../services/desaDigital.services';
+import PhoneIcon from '../../../components/icon/phone';
+import PersonChekIcon from '../../../components/icon/checkperson';
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
+};
 export default function UmkmSuvenir({ navigation }) {
-  const data = [
-    { id: 1, title: 'Otsky Gelang Pria & Wanita Rubber', price: 'IDR 120.000', location: 'Sosor Dolok', image: suvenir },
-    { id: 2, title: 'Otsky Gelang Pria & Wanita Rubber', price: 'IDR 120.000', location: 'Sosor Dolok', image: suvenir },
-    { id: 3, title: 'Otsky Gelang Pria & Wanita Rubber', price: 'IDR 120.000', location: 'Sosor Dolok', image: suvenir },
-    { id: 4, title: 'Otsky Gelang Pria & Wanita Rubber', price: 'IDR 120.000', location: 'Sosor Dolok', image: suvenir },
-  ];
+  const [suvenir, setSuvenir] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSuvenir = async () => {
+      try {
+        const response = await getUmkmSuvenir();
+        if (response.code === 200) {
+          setSuvenir(response.data || []);
+        } else {
+          console.error('Error fetching umkm:', response.message);
+        }
+      } catch (error) {
+        console.error('Error fetching umkm:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSuvenir();
+  }, []);
+
+  const goToDetail = (id) => {
+    // navigation.navigate('detail-suvenir', { id });
+  };
 
   const renderProduct = ({ item }) => (
-    <TouchableOpacity style={style.bg}>
-      <Image source={item.image} style={style.img} />
-      <Text style={style.title}>{item.title}</Text>
-      <Text style={style.price}>{item.price}</Text>
+    <TouchableOpacity style={style.bg} >
+      <Image source={{ uri: item.gambar || '' }} style={style.img} />
+      <Text style={style.title}>{item.namaProduk}</Text>
+      <Text style={style.price}>{formatPrice(item.harga)}</Text>
       <View style={style.location}>
-        <MapIcon />
-        <Text style={style.txtLocation}>{item.location}</Text>
+        <PhoneIcon />
+        <Text style={style.txtLocation}>{item.kontak}</Text>
       </View>
+      <View style={style.location}>
+        <PersonChekIcon />
+        <Text style={style.txtLocation}>{item.namaKontak}</Text>
+        </View>
     </TouchableOpacity>
   );
+
+  if (loading) {
+    return (
+      <View style={style.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={style.container}>
       <HeaderSuvenir navigation={navigation} />
       <View style={style.content}>
         <FlatList
-          data={data}
+          data={suvenir}
           renderItem={renderProduct}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
@@ -83,5 +118,10 @@ const style = StyleSheet.create({
     height: 136,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

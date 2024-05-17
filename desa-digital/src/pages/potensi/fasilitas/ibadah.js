@@ -1,47 +1,68 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, ActivityIndicator } from 'react-native';
 import MapIcon from '../../../components/icon/map';
-import ib1 from '../../../../assets/fasilitas/ib1.png'
-import PhoneIcon from '../../../components/icon/phone';
 import JamIcon from '../../../components/icon/jam';
 import HeaderIbadah from '../../../components/layout/headerIbadah';
+import { getIbdah } from '../../../services/desaDigital.services';
+
 export default function Ibadah({ navigation }) {
-     const goDetail = () =>{
-          navigation.navigate('detail-ibadah')
-     }
-     const data = [
-          { id: 1, title: 'Gereja 1',location: 'Samosir', image: ib1, phone: '082423535' },
-          { id: 2, title: 'Gereja 1',location: 'Samosir', image: ib1, phone: '082423535' },
-          { id: 3, title: 'Gereja 1',location: 'Samosir', image: ib1, phone: '082423535' },
-          { id: 4, title: 'Gereja 1',location: 'Samosir', image: ib1, phone: '082423535' },
-     ];
-     
+     const [ibadah, setIbadah] = useState([]);
+     const [loading, setLoading] = useState(true);
+
+     useEffect(() => {
+          const fetchIbadah = async () => {
+               try {
+                    const response = await getIbdah();
+                    if (response.code === 200) {
+                         setIbadah(response.data || []);
+                    } else {
+                         console.error('Error fetching fasilitas:', response.message);
+                    }
+               } catch (error) {
+                    console.error('Error fetching fasilitas:', error);
+               } finally {
+                    setLoading(false);
+               }
+          };
+          fetchIbadah();
+     }, []);
+
+     const goDetail = (id) => {
+          navigation.navigate('detail-ibadah', { id });
+     };
+
      const renderProduct = ({ item }) => (
-          <TouchableOpacity style={style.bg} onPress={goDetail} >
-               <Image source={item.image} style={style.img} />
-               <Text style={style.title}>{item.title}</Text>
-              
+          <TouchableOpacity style={style.bg} onPress={() => goDetail(item.id)}>
+               <Image source={{ uri: item.gambar }} style={style.img} />
+               <Text style={style.title}>{item.namaRumahIbadah}</Text>
                <View style={style.location}>
                     <JamIcon />
-                    <Text style={style.txtLocation}>{item.phone}</Text>
+                    <Text style={style.txtLocation}>{item.jadwalIbadah}</Text>
                </View>
                <View style={style.location}>
                     <MapIcon />
-                    <Text style={style.txtLocation}>{item.location}</Text>
+                    <Text style={style.txtLocation}>{item.lokasi}</Text>
                </View>
-               <TouchableOpacity>
-                    <Text style={{ margin: 5 }}>
-                         Selengkapnya
-                    </Text>
+               <TouchableOpacity style={style.link} onPress={() => navigation.navigate('detail-ibadah', { id: item.id })}>
+                    <Text style={{ color: '#0369A1', margin: 10, textAlign: 'right' }}>Selengkapnya</Text>
                </TouchableOpacity>
           </TouchableOpacity>
      );
+
+     if (loading) {
+          return (
+               <View style={style.loadingContainer}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+               </View>
+          );
+     }
+
      return (
           <View style={style.container}>
                <HeaderIbadah navigation={navigation} />
                <View style={style.content}>
                     <FlatList
-                         data={data}
+                         data={ibadah}
                          renderItem={renderProduct}
                          keyExtractor={(item) => item.id.toString()}
                          numColumns={2}
@@ -71,11 +92,6 @@ const style = StyleSheet.create({
           margin: 3,
           fontWeight: '800'
      },
-     price: {
-          color: '#E13A3A',
-          fontSize: 12,
-          margin: 3,
-     },
      location: {
           flexDirection: 'row',
           alignItems: 'center',
@@ -83,8 +99,7 @@ const style = StyleSheet.create({
      },
      txtLocation: {
           color: '#010101',
-          marginLeft:5
-          
+          marginLeft: 5,
      },
      bg: {
           flex: 1,
@@ -98,5 +113,10 @@ const style = StyleSheet.create({
           height: 136,
           borderTopLeftRadius: 5,
           borderTopRightRadius: 5,
+     },
+     loadingContainer: {
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
      },
 });

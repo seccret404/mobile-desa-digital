@@ -252,7 +252,178 @@ export const getWisata= async () => {
         throw new Error('Response is not JSON');
     }
 } catch (error) {
-    console.error('Error fetching penduduk:', error);
+    console.error('Error fetching wisata:', error);
+    throw error;
+}
+};
+
+export const getUmkmMakanan= async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/umkm/makanan`);
+    const text = await response.text();
+    
+    // Debug log to check the response
+    console.log("Raw response:", text);
+
+    // Attempt to parse JSON only if the response is JSON
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching umkm:', error);
+    throw error;
+}
+};
+
+export const getUmkmSuvenir= async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/umkm/souvenir`);
+    const text = await response.text();
+    
+    // Debug log to check the response
+    console.log("Raw response:", text);
+
+    // Attempt to parse JSON only if the response is JSON
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching umkm:', error);
+    throw error;
+}
+};
+export const getUmkmPakaian= async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/umkm/pakaian`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching umkm:', error);
+    throw error;
+}
+};
+
+export const getUmkmMakananDetail = async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/umkm/produk/${id}`);
+    const text = await response.text();
+
+    // Debug log to check the response
+    console.log("Raw response for detail:", text);
+
+    // Attempt to parse JSON only if the response is JSON
+    if (response.headers.get('content-type')?.includes('application/json')) {
+      return JSON.parse(text);
+    } else {
+      throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching umkm detail:', error);
+    throw error;
+  }
+};
+
+
+export const getWisataById= async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/ObjekWisata/${id}`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching wisata:', error);
+    throw error;
+}
+};
+
+
+export const getIbdah= async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/rumah-ibadah`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching fasilitas:', error);
+    throw error;
+}
+};
+export const getHomestay= async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/homestay`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching fasilitas:', error);
+    throw error;
+}
+};
+export const getIbadahDetail = async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/rumah-ibadah/${id}`);
+    const text = await response.text();
+
+    // Debug log to check the response
+    console.log("Raw response for detail:", text);
+
+    // Attempt to parse JSON only if the response is JSON
+    if (response.headers.get('content-type')?.includes('application/json')) {
+      return JSON.parse(text);
+    } else {
+      throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching fasilitas detail:', error);
+    throw error;
+  }
+};
+
+
+
+export const getHomestayDetail= async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/homestay/${id}`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+} catch (error) {
+    console.error('Error fetching wisata:', error);
     throw error;
 }
 };

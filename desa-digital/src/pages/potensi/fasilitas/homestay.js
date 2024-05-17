@@ -1,35 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
 import HeaderHomestay from '../../../components/layout/headerHomestay';
 import MapIcon from '../../../components/icon/map';
-import h1 from '../../../../assets/fasilitas/h1.png'
 import PhoneIcon from '../../../components/icon/phone';
+import { getHomestay } from '../../../services/desaDigital.services';
+
 export default function Homestay({ navigation }) {
-     const goDetail = () =>{
-          navigation.navigate('detail-homestay')
-     }
-     const data = [
-          { id: 1, title: 'Homestay 1', des: '3 hari 2 malam', price: 'IDR 120.000', location: 'Samosir', image: h1, phone: '082423535' },
-          { id: 2, title: 'Homestay 1', des: '3 hari 2 malam', price: 'IDR 120.000', location: 'Samosir', image: h1, phone: '082423535' },
-          { id: 3, title: 'Homestay 1', des: '3 hari 2 malam', price: 'IDR 120.000', location: 'Samosir', image: h1, phone: '082423535' },
-          { id: 4, title: 'Homestay 1', des: '3 hari 2 malam', price: 'IDR 120.000', location: 'Samosir', image: h1, phone: '082423535' },
-     ];
-     
+     const [homeStay, setHomeStay] = useState([]);
+     const [loading, setLoading] = useState(true);
+
+     useEffect(() => {
+          const fetchHomestay = async () => {
+               try {
+                    const response = await getHomestay();
+                    if (response.code === 200) {
+                         setHomeStay(response.data || []);
+                    } else {
+                         console.error('Error fetching fasilitas:', response.message);
+                    }
+               } catch (error) {
+                    console.error('Error fetching fasilitas:', error);
+               } finally {
+                    setLoading(false);
+               }
+          };
+          fetchHomestay();
+     }, []);
+
+     const goDetail = (id) => {
+          navigation.navigate('detail-homestay', { id });
+     };
+
+     const truncateText = (text, maxLength) => {
+          if (text.length <= maxLength) return text;
+          return text.substr(0, maxLength) + '...';
+     };
+
      const renderProduct = ({ item }) => (
-          <TouchableOpacity style={style.bg} onPress={goDetail} >
-               <Image source={item.image} style={style.img} />
-               <Text style={style.title}>{item.title}</Text>
+          <TouchableOpacity style={style.bg} onPress={() => goDetail(item.id)}>
+               <Image source={{ uri: item.gambar5 }} style={style.img} />
+               <Text style={style.title}>{item.namaPenginapan}</Text>
                <View style={{ display: 'flex', flexDirection: 'row', margin: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 12, color: "#8C7979" }}>{item.des}</Text>
-                    <Text style={style.price}>{item.price}</Text>
+                    <Text style={style.price}>{truncateText(item.deskripsi,50)}</Text>
                </View>
                <View style={style.location}>
                     <PhoneIcon />
-                    <Text style={style.txtLocation}>{item.phone}</Text>
+                    <Text style={style.txtLocation}>{item.kontak}</Text>
                </View>
                <View style={style.location}>
                     <MapIcon />
-                    <Text style={style.txtLocation}>{item.location}</Text>
+                    <Text style={style.txtLocation}>{item.lokasi}</Text>
                </View>
                <TouchableOpacity>
                     <Text style={{ margin: 5 }}>
@@ -44,7 +65,7 @@ export default function Homestay({ navigation }) {
                <HeaderHomestay navigation={navigation} />
                <View style={style.content}>
                     <FlatList
-                         data={data}
+                         data={homeStay}
                          renderItem={renderProduct}
                          keyExtractor={(item) => item.id.toString()}
                          numColumns={2}
@@ -83,6 +104,7 @@ const style = StyleSheet.create({
           flexDirection: 'row',
           alignItems: 'center',
           margin: 3,
+          width:150
      },
      txtLocation: {
           color: '#1877F2',
