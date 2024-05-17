@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet,ScrollView  } from "react-native";
 import HeaderAnggaran from "../../components/layout/headerdetailapbdes";
-export default function DetailApbdes({navigation}){
+import { getAnggaranById } from "../../services/desaDigital.services";
+export default function DetailApbdes({navigation,route}){
+     const { id } = route.params;
+
+     const [anggaran, setAnggaran] = useState([]);
+
+     useEffect(() => {
+          const fetchAnggaran = async () => {
+               try {
+                    const data = await getAnggaranById(id);
+                    setAnggaran(data);
+               } catch (error) {
+                    console.error('Error fetching anggaran:', error);
+                    setError('Gagal mengambil data anggaran. Silakan coba lagi nanti.');
+               }
+          };
+
+          fetchAnggaran();
+     }, [id]);
+
+
+
      return(
           <View style={styles.container}>
                <HeaderAnggaran navigation={navigation}/>
@@ -13,7 +34,7 @@ export default function DetailApbdes({navigation}){
                          
                          </Text>
                          <View style={styles.boxAnggaran}>
-                              <Text style={styles.titleAnggaran}>APB Desa 2024 Pelaksanaan</Text>
+                              <Text style={styles.titleAnggaran}>APB Desa {anggaran.tahun_anggaran} Pelaksanaan</Text>
                               <View style={{marginTop:5,padding:5}}>
                                    <Text style={styles.subtitle}>
                                         Pendapatan Desa
@@ -47,7 +68,7 @@ export default function DetailApbdes({navigation}){
                          </View>
 
                          <View style={styles.boxAnggaran}>
-                              <Text style={styles.titleAnggaran}>APB Desa 2024 Pelaksanaan</Text>
+                              <Text style={styles.titleAnggaran}>APB Desa {anggaran.tahun_anggaran} Pelaksanaan</Text>
                               <View style={{marginTop:5,padding:5}}>
                                    <Text style={styles.subtitle}>
                                         Pendapatan Desa
@@ -81,7 +102,7 @@ export default function DetailApbdes({navigation}){
                          </View>
 
                          <View style={styles.boxAnggaran}>
-                              <Text style={styles.titleAnggaran}>APB Desa 2024 Pelaksanaan</Text>
+                              <Text style={styles.titleAnggaran}>APB Desa {anggaran.tahun_anggaran} Pelaksanaan</Text>
                               <View style={{marginTop:5,padding:5}}>
                                    <Text style={styles.subtitle}>
                                         Pendapatan Desa

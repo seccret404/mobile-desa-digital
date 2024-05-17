@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View,Text,Image,StyleSheet, ScrollView,TouchableOpacity } from "react-native";
 import HeaderAnggaran from "../../components/layout/headerSanggaran";
 import RightIcon from '../../components/icon/right'
+import { getAnggaran } from "../../services/desaDigital.services";
 export default function Anggaran({navigation}){
-     const detail = () =>{
-          navigation.navigate('anggaran-detail')
-     }
+     const [anggaran, setAnggaran] = useState([]);
+
+     useEffect(() =>{
+          const fetchAnggaran = async () =>{
+               try{
+                 const data = await getAnggaran();
+               setAnggaran(data)   
+               } catch (error) {
+                    console.error('Error fetching anggaran:', error);
+               }
+               
+          }
+          fetchAnggaran();
+     },[])
+   
      return (
           <View style={styles.container}>
                <HeaderAnggaran navigation={navigation}/>
@@ -13,25 +26,15 @@ export default function Anggaran({navigation}){
                     <Image source={require('../../../assets/anggaran.png')} style={styles.img}/>
                     <Text style={styles.bigTitle}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun 2024</Text>
                     <ScrollView>
-                         <TouchableOpacity onPress={detail}>
+                         {anggaran.map(anggaranData => (
+                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('anggaran-detail', { id: anggaranData.id })}>
                             <View style={styles.box}>
-                              <Text style={styles.title}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun 2024</Text>
+                              <Text style={styles.title}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun {anggaranData.tahun_anggaran}</Text>
                               <RightIcon/>
                          </View>   
-                         </TouchableOpacity>
-                         <TouchableOpacity>
-                            <View style={styles.box}>
-                              <Text style={styles.title}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun 2023</Text>
-                              <RightIcon/>
-                         </View>   
-                         </TouchableOpacity>
-                         <TouchableOpacity>
-                            <View style={styles.box}>
-                              <Text style={styles.title}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun 2022</Text>
-                              <RightIcon/>
-                         </View>   
-                         </TouchableOpacity>
-                        
+                         </TouchableOpacity> 
+                         ))}
+                         
                     </ScrollView>
                </View>
           </View>

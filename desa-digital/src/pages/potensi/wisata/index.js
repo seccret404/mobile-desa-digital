@@ -1,54 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import HeaderWisata from '../../../components/layout/headerwisata';
 import Footer from '../../../components/layout/footer';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity,FlatList } from 'react-native';
 import wisataImg from '../../../../assets/wisata/wisata.png'
+import { getWisata } from '../../../services/desaDigital.services';
 export default function Wisata({ navigation }) {
-     const goDetail = () =>{
-          navigation.navigate('detail-wisata')
-     }
+     
+          const [wisata, setWisata] = useState([]);
+          useEffect(() =>{
+               const fetchWisata = async () =>{
+                    try{
+                      const data = await getWisata();
+                      setWisata(data)   
+                    } catch (error) {
+                         console.error('Error fetching wisata:', error);
+                    }
+                    
+               }
+               fetchWisata();
+          },[])
+
+          const renderItem = ({ item }) => (
+               <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('detail-wisata', { id: item.id })}>
+                 <Image source={{ uri: item.gambar }} style={styles.img} />
+                 <Text style={styles.title}>{item.namaObjekWisata}</Text>
+                 <Text style={styles.deskripsi}>{item.deskripsi}</Text>
+                 <TouchableOpacity style={styles.link}>
+                   <Text style={{ color: '#0369A1' }}>Selengkapnya</Text>
+                 </TouchableOpacity>
+               </TouchableOpacity>
+             );
+             
+             
+
      return (
           <View style={styles.container}>
-               <HeaderWisata navigation={navigation} />
-               <View style={styles.content}>
-                    <View style={styles.boxCard}>
-                         <View style={styles.card}>
-                              <Image source={wisataImg} style={styles.img} />
-                              <Text style={styles.title}>
-                                   Bukit Holbung
-                              </Text>
-                              <Text style={styles.deskripsi}>
-                                   Bukit Holbung adalah salah satu destinasi wisata alam yang tersembunyi namun
-                                   menakjubkan di 
-                              </Text>
-                              <TouchableOpacity style={styles.link} onPress={goDetail}>
-                                   <Text style={{color:'#0369A1'}}>
-                                        Selengkapnya
-                                   </Text>
-                              </TouchableOpacity>
-
-                         </View>
-                         <View style={styles.card}>
-                              <Image source={wisataImg} style={styles.img} />
-                              <Text style={styles.title}>
-                                   Bukit Holbung
-                              </Text>
-                              <Text style={styles.deskripsi}>
-                                   Bukit Holbung adalah salah satu destinasi wisata alam yang tersembunyi namun
-                                   menakjubkan di
-                              </Text>
-                              <TouchableOpacity style={styles.link}>
-                                   <Text style={{color:'#0369A1'}}>
-                                        Selengkapnya
-                                   </Text>
-                              </TouchableOpacity>
-
-                         </View>
-                         
-                    </View>
-               </View>
-               <Footer navigation={navigation} />
+          <HeaderWisata navigation={navigation} />
+          <View style={styles.content}>
+               <FlatList
+                    data={wisata}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id.toString()}
+                    numColumns={2}
+               />
           </View>
+          <Footer navigation={navigation} />
+     </View>
+               
      );
 }
 

@@ -1,34 +1,52 @@
-import React from 'react';
-import HeaderPemerintahan from '../../components/layout/headerPemerintahan';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import pemerintahan from '../../../assets/pemerintahan.png';
+import HeaderPemerintahan from '../../components/layout/headerPemerintahan';
+import { getPemerintah } from '../../services/desaDigital.services';
 
 export default function Pemerintahan({ navigation }) {
-  const data = Array.from({ length: 10 }, (_, index) => ({
-    id: index.toString(),
-    name: `Robong Sumlimbong ${index + 1}`,
-    jabatan: 'Kepala Desa',
-    image: pemerintahan,
-  }));
+  const [pemerintah, setPemerintah] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPemerintah = async () => {
+      try {
+        const data = await getPemerintah();
+        const sortedData = sortPemerintah(data);
+        setPemerintah(sortedData);
+      } catch (error) {
+        console.error('Error fetching pemerintah:', error);
+        setError('Failed to fetch pemerintah data. Please try again later.');
+      }
+    };
+    fetchPemerintah();
+  }, []);
+
+  const sortPemerintah = (data) => {
+    const order = ['Kepala Desa', 'Sekretaris', 'Bendahara'];
+    return data.sort((a, b) => order.indexOf(a.jabatan) - order.indexOf(b.jabatan));
+  };
 
   return (
-    <View style={style.container}>
+    <View style={styles.container}>
       <HeaderPemerintahan navigation={navigation} />
-      <ScrollView contentContainerStyle={style.content} showsVerticalScrollIndicator={false}>
-        {data.map((item, index) => (
-          <View key={item.id} style={style.bg}>
-            <Image source={item.image} style={style.img} />
-            <Text style={style.name}>{item.name}</Text>
-            <Text style={style.jabatan}>{item.jabatan}</Text>
-          </View>
-        ))}
-        
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {error ? (
+          <Text style={styles.errorText}>{error}</Text>
+        ) : (
+          pemerintah.map((item) => (
+            <View key={item.id} style={styles.bg}>
+              <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${item.profil}` }} style={styles.img} />
+              <Text style={styles.name}>{item.nama}</Text>
+              <Text style={styles.jabatan}>{item.jabatan}</Text>
+            </View>
+          ))
+        )}
       </ScrollView>
     </View>
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -37,7 +55,7 @@ const style = StyleSheet.create({
   content: {
     alignItems: 'center',
     margin: 10,
-    paddingBottom:10
+    paddingBottom: 10,
   },
   bg: {
     backgroundColor: '#ffffff',
@@ -62,5 +80,10 @@ const style = StyleSheet.create({
   jabatan: {
     textAlign: 'center',
     color: '#404040',
+  },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    margin: 10,
   },
 });

@@ -1,96 +1,119 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, ScrollView, FlatList } from "react-native";
 import DetailAgenda from "../../components/layout/headerdetailagenda";
-import MapIcon from '../../components/icon/map'
-import PersonCheckIcon from '../../components/icon/checkperson'
-export default function AgendaDetail({ navigation }) {
+import MapIcon from '../../components/icon/map';
+import PersonCheckIcon from '../../components/icon/checkperson';
+import { getAgendaById, getlaporanAgendaById } from "../../services/desaDigital.services";
 
-     const data = [
-          { id: '1', image: require('../../../assets/kegiatan/agenda22.png') },
-          { id: '2', image: require('../../../assets/kegiatan/agenda22.png') },
-          { id: '3', image: require('../../../assets/kegiatan/agenda22.png') },
-          { id: '4', image: require('../../../assets/kegiatan/agenda22.png') },
+export default function AgendaDetail({ navigation, route }) {
+     const { id } = route.params;
+     const [agenda, setAgenda] = useState(null);
+     const [laporan, setLaporan] = useState([]);
+     const [error, setError] = useState(null);
 
-     ]
+     useEffect(() => {
+          const fetchAgenda = async () => {
+               try {
+                    const data = await getAgendaById(id);
+                    setAgenda(data);
+               } catch (error) {
+                    console.error('Error fetching agenda:', error);
+                    setError('Gagal mengambil data agenda. Silakan coba lagi nanti.');
+               }
+          };
+
+          fetchAgenda();
+     }, [id]);
+
+     useEffect(() => {
+          const fetchLaporan = async () => {
+               try {
+                    const data = await getlaporanAgendaById(id);
+                    setLaporan(data);
+               } catch (error) {
+                    console.error('Error fetching laporan:', error);
+                    setError('Gagal mengambil data laporan. Silakan coba lagi nanti.');
+               }
+          };
+
+          fetchLaporan();
+     }, [id]);
+     const formatDate = (tgl) => {
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          return new Date(tgl).toLocaleDateString('id-ID', options);
+     };
+
      return (
           <View style={styles.container}>
                <DetailAgenda navigation={navigation} />
 
-               {/* content */}
                <View style={styles.content}>
                     <ScrollView>
-                         <View style={styles.boxContent}>
-                              <Image source={require('../../../assets/kegiatan/agenda22.png')} style={styles.img} height={182} borderRadius={5} />
-                              <Text style={styles.title}>Sosialisasi Perhitungan Suara Pilpres</Text>
-                              <Text style={styles.waktu}>15-03-2024</Text>
-                              <View style={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
-                                   <View>
-                                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                         {error ? (
+                              <Text style={styles.errorText}>{error}</Text>
+                         ) : agenda ? (
+                              <View style={styles.boxContent}>
+
+                                   <Text style={styles.title}>{agenda.nama_kegiatan}</Text>
+                                   <Text style={styles.waktu}> {formatDate(agenda.tanggal_kegiatan)} </Text>
+                                   <View style={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                              <MapIcon />
-                                             <Text style={{ marginLeft: 5 }}>Desa Tomok</Text>
+                                             <Text style={{ marginLeft: 5 }}>{agenda.lokasi}</Text>
                                         </View>
-                                   </View>
-                                   <View style={{ marginLeft: 20 }}>
-                                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                        <View style={{ marginLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
                                              <PersonCheckIcon />
-                                             <Text style={{ marginLeft: 5 }}>Ican CY Pane</Text>
+                                             <Text style={{ marginLeft: 5 }}>{laporan.koordinator}</Text>
                                         </View>
                                    </View>
-                              </View>
-                              <Text style={styles.tujuan}>Tujuan : Memberikan gambaran perhitungan suara</Text>
-                              <Text style={styles.deskripsi}>
-                                   Sosialisasi perhitungan suara dilakukanoleh pihak KPU. Agenda perhitungan suara oleh Komisi Pemilihan Umum (KPU) mencakup beberapa tahapan yang terinci. Setelah pemungutan suara selesai, kotak suara dari masing-masing Tempat Pemungutan Suara (TPS) dikumpulkan dan dibawa ke Tempat Pemungutan Suara (TPS) yang telah ditentukan sebelumnya. Di sana, proses dimulai dengan verifikasi surat suara untuk memastikan keabsahan dan keutuhan setiap surat suara. Kemudian, proses perhitungan dimulai secara transparan di hadapan saksi dari masing-masing calon atau partai politik yang bersaing, dengan menggunakan Sistem Informasi Perhitungan Suara (Situng) untuk mempercepat dan mempermudah proses. Setelah selesai, hasil perhitungan suara diumumkan secara resmi oleh KPU. Proses ini diawasi secara ketat untuk memastikan integritas dan akurasi, serta penanganan sengketa atau pengaduan jika terjadi kesalahan dalam perhitungan.
-                              </Text>
-                              <Text style={{ fontSize: 16, fontWeight: '700', marginTop: 21, marginBottom: 9 }}>Dokumentasi Kegiatan</Text>
-                              <View>
+                                   <Text style={styles.tujuan}>Tujuan: {agenda.tujuan_kegiatan}</Text>
+                                   <Text style={styles.deskripsi}>{agenda.deskripsi_kegiatan}</Text>
+
+                                   <Text style={{ fontSize: 16, fontWeight: '700', marginTop: 21, marginBottom: 9 }}>Dokumentasi Kegiatan</Text>
                                    <FlatList
-                                        data={data}
+                                        data={laporan}
                                         horizontal
                                         pagingEnabled
                                         showsHorizontalScrollIndicator={false}
-
-                                        keyExtractor={(item) => item.id}
+                                        keyExtractor={(item) => item.id.toString()}
                                         renderItem={({ item }) => (
-                                             <Image source={item.image} style={{ margin: 2 }} width={350} />
+                                             <Image source={{ uri: `https://desa-digital-backend-production.up.railway.app/images/laporan/dokumentasi/${item.dokumentasi}` }} style={{ margin: 2, width: 350 }} />
                                         )}
                                    />
-                              </View>
-                              <View style={styles.peserta}>
-                                   <View>
-                                        <Text style={{fontSize:16,fontWeight:'700',textAlign:'center'}}>Total Peserta</Text>
-                                        <View style={styles.boxPeserta}>
-                                             <Text style={{textAlign:'center',padding:15,color:'#ffffff'}}>129 Peserta</Text>
+
+                                   <View style={styles.peserta}>
+                                        <View>
+                                             <Text style={{ fontSize: 16, fontWeight: '700', textAlign: 'center' }}>Total Peserta</Text>
+                                             <View style={styles.boxPeserta}>
+                                                  <Text style={{ textAlign: 'center', padding: 15, color: '#ffffff' }}>{laporan.jumlah_peserta} Peserta</Text>
+                                             </View>
                                         </View>
                                    </View>
 
-                              </View>
-
-                             <View style={styles.boxAnggaran1}>
-                             <View style={styles.anggaran}>
-                                   <View style={styles.box}>
-                                        <Text style={{color:'#ffffff',fontSize:14,textAlign:'center',marginBottom:5}}>Anggaran Desa</Text>
-                                        <View style={styles.boxAnggaran}>
-                                             <Text style={{padding:5,textAlign:'center'}}>
-                                                  Rp 100.000.000
-                                             </Text>
-                                        </View>
-                                   </View>
-                                   <View style={styles.box}>
-                                        <Text style={{color:'#ffffff',fontSize:14,textAlign:'center',marginBottom:5}}>Donasi</Text>
-                                        <View style={styles.boxAnggaran}>
-                                             <Text style={{padding:5,textAlign:'center'}}>
-                                                  Rp 50.000.000
-                                             </Text>
+                                   <View style={styles.boxAnggaran1}>
+                                        <View style={styles.anggaran}>
+                                             <View style={styles.box}>
+                                                  <Text style={{ color: '#ffffff', fontSize: 14, textAlign: 'center', marginBottom: 5 }}>Anggaran Desa</Text>
+                                                  <View style={styles.boxAnggaran}>
+                                                       <Text style={{ padding: 5, textAlign: 'center' }}>Rp {laporan.anggaran_desa}</Text>
+                                                  </View>
+                                             </View>
+                                             <View style={styles.box}>
+                                                  <Text style={{ color: '#ffffff', fontSize: 14, textAlign: 'center', marginBottom: 5 }}>Donasi</Text>
+                                                  <View style={styles.boxAnggaran}>
+                                                       <Text style={{ padding: 5, textAlign: 'center' }}>Rp {laporan.donasi}</Text>
+                                                  </View>
+                                             </View>
                                         </View>
                                    </View>
                               </View>
-                             </View>
-                         </View>
+                         ) : (
+                              <Text>Memuat data...</Text>
+                         )}
                     </ScrollView>
                </View>
-
           </View>
-     )
+     );
 }
 
 const styles = StyleSheet.create({
@@ -117,7 +140,7 @@ const styles = StyleSheet.create({
      },
      tujuan: {
           marginTop: 15,
-          fontWeight: '700',
+          fontWeight: '700'
      },
      deskripsi: {
           textAlign: 'justify',
@@ -129,40 +152,46 @@ const styles = StyleSheet.create({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
-          marginTop:21
+          marginTop: 21
      },
-     boxPeserta:{
-          backgroundColor:'#0890EA',
-          borderRadius:5,
-          marginTop:3
-
+     boxPeserta: {
+          backgroundColor: '#0890EA',
+          borderRadius: 5,
+          marginTop: 3
      },
-     anggaran:{
-          backgroundColor:'#0890EA',
-          borderRadius:5,
-          width:329,
-          marginTop:21,
-          display:'flex',
-          flexDirection:'row',
-          justifyContent:'space-around',
-          alignItems:'center',
-          
+     anggaran: {
+          backgroundColor: '#0890EA',
+          borderRadius: 5,
+          width: 329,
+          marginTop: 21,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center'
      },
-     boxAnggaran:{
-          backgroundColor:'#ffffff',
-          width:112,
-          borderRadius:5
+     boxAnggaran: {
+          backgroundColor: '#ffffff',
+          width: 112,
+          borderRadius: 5
      },
-     box:{
-       marginTop:21,marginBottom:21
+     box: {
+          marginTop: 21,
+          marginBottom: 21
      },
-     img:{
-          width:'full'
+     img: {
+          width: '100%',
+          height: 182,
+          borderRadius: 5
      },
-     boxAnggaran1:{
-          display:'flex',
-          flexDirection:"column",
-          justifyContent:'center',
-          alignItems:'center'
+     boxAnggaran1: {
+          display: 'flex',
+          flexDirection: "column",
+          justifyContent: 'center',
+          alignItems: 'center'
+     },
+     errorText: {
+          color: 'red',
+          textAlign: 'center',
+          margin: 10
      }
-})
+});

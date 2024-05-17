@@ -1,30 +1,73 @@
-import React from "react";
-import { View,Text,StyleSheet,ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View,Text,StyleSheet,ScrollView,Image } from "react-native";
 import HeaderPengumuman from "../../components/layout/headerDetailPengumuman";
+import { getPengumumanById } from "../../services/desaDigital.services";
 
-export default function DetailPengumuman({navigation}){
-     return(
-          <View style={styles.container}>
-               <HeaderPengumuman navigation={navigation}/>
-               <View style={styles.content}>
-                    <ScrollView>
-                         <Text style={styles.title}>Sosialisasi Perhitungan Suara Pilpres</Text>
-                         <Text style={styles.waktu}>15/03/2024</Text>
-                         <Text style={styles.deskripsi}>
-                         Sosialisasi perhitungan suara dilakukanoleh pihak KPU. Agenda perhitungan suara oleh Komisi Pemilihan Umum (KPU) mencakup beberapa tahapan yang terinci. Setelah pemungutan suara selesai, kotak suara dari masing-masing Tempat Pemungutan Suara (TPS) dikumpulkan dan dibawa ke Tempat Pemungutan Suara (TPS) yang telah ditentukan sebelumnya. Di sana, proses dimulai dengan verifikasi surat suara
-                          untuk memastikan keabsahan dan keutuhan setiap surat suara. Kemudian, proses perhitungan dimulai secara transparan di hadapan saksi dari masing-masing calon atau partai politik yang bersaing, dengan menggunakan Sistem Informasi Perhitungan Suara (Situng) untuk mempercepat dan mempermudah proses.
-                         </Text>
-                         <Text style={styles.file}>File</Text>
-                         <View style={styles.boxfile}>
-                              <Text>
-                              Lampiran 
-                              </Text>
-                         </View>
-                    </ScrollView>
-               </View>
-          </View>
-     )
-}
+export default function DetailPengumuman({ navigation, route }) {
+     const { id } = route.params;
+     const [pengumuman, setPengumuman] = useState(null);
+   
+     useEffect(() => {
+       const fetchPengumuman = async () => {
+         try {
+           const data = await getPengumumanById(id);
+           setPengumuman(data);
+         } catch (error) {
+           console.error('Error fetching pengumuman:', error);
+         }
+       };
+   
+       fetchPengumuman();
+     }, [id]);
+   
+     if (!pengumuman) {
+       return (
+         <View style={styles.container}>
+           <HeaderPengumuman navigation={navigation} />
+           <View style={styles.content}>
+             <Text>Loading...</Text>
+           </View>
+         </View>
+       );
+     }
+
+     const cleanHTMLTags = (html) => {
+          const cleanText = html.replace(/<[^>]+>/g, '');
+          return cleanText;
+     };
+
+     const truncateText = (text, maxLength) => {
+          if (text.length <= maxLength) return text;
+          return text.substr(0, maxLength) + '...';
+     };
+
+     const formatDate = (tgl) => {
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          return new Date(tgl).toLocaleDateString('id-ID', options);
+     };
+   
+     return (
+       <View style={styles.container}>
+         <HeaderPengumuman navigation={navigation} />
+         <View style={styles.content}>
+           <ScrollView>
+             <Text style={styles.title}>{pengumuman.judul_pengumuman}</Text>
+             <Text style={styles.waktu}>{formatDate(pengumuman.tgl_publikasi)}</Text>
+             <Text style={styles.deskripsi}>
+             {truncateText(cleanHTMLTags(pengumuman.deskripsi_pengumuman), 32)}
+             </Text>
+             <Text style={styles.file}>File</Text>
+             <View style={styles.boxfile}>
+               <Text>
+                    <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/pengumuman/images/cover/${pengumuman.cover_pengumuman}` }}/>
+               </Text>
+             </View>
+           </ScrollView>
+         </View>
+       </View>
+     );
+   }
+   
 
 const styles = StyleSheet.create({
      container:{
@@ -33,6 +76,7 @@ const styles = StyleSheet.create({
           justifyContent:'space-between',
           backgroundColor:'#ffffff'
      },
+    
      content:{
           flex:1,
           marginBottom:10,

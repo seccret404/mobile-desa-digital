@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
 import HeaderPendudukUtama from "../../components/layout/headerUtamaPenduduk";
 import DusunIcon from "../../components/icon/dusun";
+import { getDusun } from "../../services/desaDigital.services";
 export default function Penduduk({navigation}) {
-     const goDusun = () =>{
-          navigation.navigate('detail-dusun')
-     }
+     const [dusun, setDusun] = useState([]);
+
+     useEffect(() =>{
+          const fetchDusun = async () =>{
+               try{
+                 const data = await getDusun();
+                 setDusun(data)   
+               } catch (error) {
+                    console.error('Error fetching dusun:', error);
+               }
+               
+          }
+          fetchDusun();
+     },[])
+     
      const goPenduduk = () =>{
           navigation.navigate('detail-penduduk')
      }
@@ -16,16 +29,19 @@ export default function Penduduk({navigation}) {
                <View style={styles.content}>
                     <Text style={styles.bigTitle}>Statistik Data Penduduk Desa Sosor Dolok</Text>
                     <ScrollView>
-                         <TouchableOpacity onPress={goDusun}>
+                         {dusun.map(dusunData=>(
+                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('detail-dusun', { id: dusunData.id })}>
                          <View style={styles.boxDusun}>
                               <View style={styles.bgDusun}>
                                    <DusunIcon size={36} />
                               </View>
                               <Text style={styles.namaDusun}>
-                                   Dusun 1
+                                   {dusunData.nama_dusun}
                               </Text>
                          </View>
-                         </TouchableOpacity>
+                         </TouchableOpacity> 
+                         ))}
+                         
                          <TouchableOpacity onPress={goPenduduk}>
                          <View style={styles.boxDusun}>
                               <View style={styles.bgDusun}>

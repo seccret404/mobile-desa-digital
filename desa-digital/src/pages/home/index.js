@@ -10,9 +10,52 @@ import PengumumanIcon from '../../components/icon/pengumuman'
 import ApbdesIcon from '../../components/icon/apbdes'
 import PendudukIcon from '../../components/icon/penduduk'
 import BeritaIcon from '../../components/icon/berita'
-
+import { useEffect } from 'react'
+import { fetchDusun, getBerita, getPengumuman } from '../../services/desaDigital.services'
 export default function Home({ navigation }) {
      const [numColumns, setNumColumns] = useState(3);
+     const [userList, setUserList] = useState([]);
+     const [pengumuman,setPengumuman] = useState([]);
+     const [berita, setBerita] = useState([]);
+
+     useEffect(() => {
+          const fetchBerita = async () => {
+               try {
+                    const allBerita = await getBerita();
+                    const latestBerita = allBerita.slice(0, 3);
+                    setBerita(latestBerita);
+               } catch (error) {
+                    console.error('Error fetching user list:', error);
+               }
+          }
+          fetchBerita();
+     }, [])
+     useEffect(() =>{
+          const fetchPengumuman = async () =>{
+               try{
+                    const data = await getPengumuman();
+                    const latestData = data.slice(0,3);
+                    setPengumuman(latestData);
+               }
+               catch (error) {
+                    console.error('Error fetching user list:', error);
+               }
+          }
+          fetchPengumuman();
+     },[])
+
+     useEffect(() => {
+          const fetchData = async () => {
+               try {
+                    const data = await fetchDusun();
+                    setUserList(data);
+               } catch (error) {
+                    console.error('Error fetching user list:', error);
+               }
+          };
+
+          fetchData();
+     }, []);
      const menu = [
           { key: 1, icon: <AgendaIcon />, namaMenu: 'Agenda Desa', route: 'agenda' },
           { key: 2, icon: <OrganisasiIcon />, namaMenu: 'Organisasi Desa', route: 'organisasi' },
@@ -36,6 +79,20 @@ export default function Home({ navigation }) {
                </View>
           </TouchableOpacity>
      )
+     const formatDate = (tgl) => {
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          return new Date(tgl).toLocaleDateString('id-ID', options);
+     };
+
+     const cleanHTMLTags = (html) => {
+          const cleanText = html.replace(/<[^>]+>/g, '');
+          return cleanText;
+     };
+
+     const truncateText = (text, maxLength) => {
+          if (text.length <= maxLength) return text;
+          return text.substr(0, maxLength) + '...';
+     };
      return (
           <View style={styles.container}>
                <HeaderHome />
@@ -81,44 +138,48 @@ export default function Home({ navigation }) {
                               </View>
                               <View style={styles.boxCard}>
                                    {/* berita desa */}
-                                   <View style={styles.cardNews}>
-                                        <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/Berita/berita.png')} width={95} height={95} borderRadius={5} />
-                                        </View>
-                                        <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Kunjungan ke PT.TPL</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
-                                                       <Text style={styles.btnText}>Selengkapnya</Text>
-                                                  </TouchableOpacity>
+                                   {berita.map(beritaData => (
+                                        <View style={styles.cardNews} key={beritaData.id}>
+                                             <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
+                                                  <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/cover/${beritaData.cover}` }} style={{ width: 95, height: 95, borderRadius: 5 }} />
+                                             </View>
+                                             <View style={styles.contentNews}>
+                                                  <Text style={styles.judul}>{beritaData.judul_berita}</Text>
+                                                  <Text style={styles.waktu}>{formatDate(beritaData.tgl_publikasi)}</Text>
+                                                  <Text style={styles.deskripsi}>{truncateText(cleanHTMLTags(beritaData.isi_berita), 32)}</Text>
+                                                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
+                                                  <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('detail-berita', { id: beritaData.id })}>
+                                                            <Text style={styles.btnText}>Selengkapnya</Text>
+                                                       </TouchableOpacity>
+                                                  </View>
                                              </View>
                                         </View>
-                                   </View>
+                                   ))}
+
                               </View>
                               {/* Agenda Desa */}
                               <View style={styles.titleNews}>
                                    <Text style={styles.textTitleNews}>Agenda Desa terbaru</Text>
                               </View>
                               <View style={styles.boxCard}>
-                                   <View style={styles.cardNews}>
+                                   {pengumuman.map(pengumumanData =>(
+                                        <View style={styles.cardNews}>
                                         <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/Berita/berita.png')} width={95} height={95} borderRadius={5} />
+                                             <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/pengumuman/images/cover/${pengumumanData.cover_pengumuman}` }} width={95} height={95} borderRadius={5} />
                                         </View>
                                         <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Kunjungan ke PT.TPL</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.waktu}>Lokasi : Tomok</Text>
-                                             <Text style={styles.waktu}>Tujuan : Memberikan gambaran perhitunga</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
+                                             <Text style={styles.judul}>{pengumumanData.judul_pengumuman}</Text>
+                                             <Text style={styles.waktu}>{formatDate(pengumumanData.tgl_publikasi)}</Text>
+                                             <Text style={styles.deskripsi}>{truncateText(cleanHTMLTags(pengumumanData.deskripsi_pengumuman), 32)}</Text>
                                              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
+                                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('detail-pengumuman', { id: pengumumanData.id })}>
                                                        <Text style={styles.btnText}>Selengkapnya</Text>
                                                   </TouchableOpacity>
                                              </View>
                                         </View>
-                                   </View>
+                                   </View> 
+                                   ))}
+                                  
                               </View>
                          </View>
 

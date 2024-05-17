@@ -1,58 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
 import HeaderPengumuman from "../../components/layout/headerPengumuman";
+import { getPengumuman } from "../../services/desaDigital.services";
+
 export default function Pengumuman({ navigation }) {
-     const goDetail = () =>{
-          navigation.navigate('detail-pengumuman');
+     const [searchQuery, setSearchQuery] = useState('');
+     const [pengumuman, setPengumuman] = useState([]);
+     
+     useEffect(() =>{
+          const fetchPengumuman = async () =>{
+               try{
+                    const data = await getPengumuman();
+                    setPengumuman(data);
+               }
+               catch (error) {
+                    console.error('Error fetching user list:', error);
+               }
+          }
+          fetchPengumuman();
+     },[])
+
+     const formatDate = (tgl) => {
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          return new Date(tgl).toLocaleDateString('id-ID', options);
      };
+
+     const cleanHTMLTags = (html) => {
+          const cleanText = html.replace(/<[^>]+>/g, '');
+          return cleanText;
+     };
+
+     const truncateText = (text, maxLength) => {
+          if (text.length <= maxLength) return text;
+          return text.substr(0, maxLength) + '...';
+     };
+
+     const filteredPengumuman = pengumuman.filter(item =>
+          item.judul_pengumuman.toLowerCase().includes(searchQuery.toLowerCase())
+     );
+
      return (
           <View style={styles.container}>
                <HeaderPengumuman navigation={navigation} />
                <View style={styles.content}>
                     <View style={styles.boxSearch}>
-                         <TextInput placeholder='Cari' style={styles.textInput} />
+                         <TextInput
+                              placeholder='Cari'
+                              style={styles.textInput}
+                              value={searchQuery}
+                              onChangeText={text => setSearchQuery(text)}
+                         />
                          <FontAwesome name='search' size={18} color='grey' style={styles.search} />
                     </View>
-                    <ScrollView >
+                    <ScrollView>
                          <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center',marginBottom:10,alignItems:'center' }}>
-                              <View style={styles.cardNews}>
+                              {filteredPengumuman.map(pengumumanData => 
+                              <View style={styles.cardNews} key={pengumumanData.id}>
                                    <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                        <Image source={require('../../../assets/Berita/berita.png')} width={95} height={95} borderRadius={5} />
+                                        <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/pengumuman/images/cover/${pengumumanData.cover}` }} width={95} height={95} borderRadius={5} />
                                    </View>
                                    <View style={styles.contentNews}>
-                                        <Text style={styles.judul}>Sosialisasi Perhitungan Suara Pilpres </Text>
-                                        <Text style={styles.waktu}>14/06/2023</Text>
-                                        <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
+                                        <Text style={styles.judul}>{pengumumanData.judul_pengumuman}</Text>
+                                        <Text style={styles.waktu}>
+                                        {formatDate(pengumumanData.tgl_publikasi)}
+                                        </Text>
+                                        <Text style={styles.deskripsi}>
+                                        {truncateText(cleanHTMLTags(pengumumanData.deskripsi_pengumuman), 32)}
+                                        </Text>
                                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                             <TouchableOpacity style={styles.btn} onPress={goDetail}>
+                                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('detail-pengumuman', { id: pengumumanData.id })}>
                                                   <Text style={styles.btnText}>Selengkapnya</Text>
                                              </TouchableOpacity>
                                         </View>
                                    </View>
                               </View>
-                              
-
-                              <View style={styles.cardNews}>
-                                   <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                        <Image source={require('../../../assets/Berita/berita.png')} width={95} height={95} borderRadius={5} />
-                                   </View>
-                                   <View style={styles.contentNews}>
-                                        <Text style={styles.judul}>Kunjungan ke PT.TPL</Text>
-                                        <Text style={styles.waktu}>14/06/2023</Text>
-                                        <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                             <TouchableOpacity style={styles.btn}>
-                                                  <Text style={styles.btnText}>Selengkapnya</Text>
-                                             </TouchableOpacity>
-                                        </View>
-                                   </View>
-                              </View>
+                              )}
                          </View>
-
                     </ScrollView>
                </View>
-
           </View>
      )
 }
@@ -76,7 +102,8 @@ const styles = StyleSheet.create({
           height: 40,
           borderRadius: 30,
           width: '100%',
-          padding: 8
+          padding: 8,
+          paddingLeft:20
      },
      boxSearch: {
           flexDirection: 'row',
@@ -87,7 +114,8 @@ const styles = StyleSheet.create({
      search: {
           position: 'absolute',
           right: 25,
-          top: 10
+          top: 10,
+         
      },
      judul: {
           fontSize: 12,
@@ -116,7 +144,6 @@ const styles = StyleSheet.create({
      },
      cardNews: {
           width: 325,
-
           display: 'flex',
           flexDirection: 'row',
           backgroundColor: '#ffffff',
@@ -131,4 +158,4 @@ const styles = StyleSheet.create({
           paddingTop: 7,
           paddingBottom: 7
      }
-})
+});

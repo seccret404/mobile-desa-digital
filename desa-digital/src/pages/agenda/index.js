@@ -1,11 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native'
 import HeaderAgenda from '../../components/layout/headerAgenda';
 import { FontAwesome } from '@expo/vector-icons';
+import { getAgenda } from '../../services/desaDigital.services';
 export default function AgendaDesa({ navigation }) {
+     const [agenda, setAgenda] = useState([]);
+     const [searchQuery, setSearchQuery] = useState('');
+     useEffect(() => {
+          const fetchAgenda = async () => {
+               try {
+                    const data = await getAgenda();
+                    setAgenda(data);
+               } catch (error) {
+                    console.error('Error fetching agenda:', error);
+               }
+          }
+          fetchAgenda();
+     }, [])
+
      const goDetail = () => {
           navigation.navigate('agenda-detail');
      }
+     const formatDate = (tgl) => {
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          return new Date(tgl).toLocaleDateString('id-ID', options);
+     };
+     
+     const cleanHTMLTags = (html) => {
+          const cleanText = html.replace(/<[^>]+>/g, '');
+          return cleanText;
+     };
+
+     const truncateText = (text, maxLength) => {
+          if (text.length <= maxLength) return text;
+          return text.substr(0, maxLength) + '...';
+     };
+     const filteredAgenda = agenda.filter(item =>
+          item.nama_kegiatan.toLowerCase().includes(searchQuery.toLowerCase())
+     );
      return (
           <View style={styles.container}>
                <HeaderAgenda navigation={navigation} />
@@ -14,103 +46,33 @@ export default function AgendaDesa({ navigation }) {
                <View style={styles.content}>
                     {/* text input */}
                     <View style={styles.boxSearch}>
-                         <TextInput placeholder='Cari' style={styles.textInput} />
+                         <TextInput placeholder='Cari' 
+                              style={styles.textInput}
+                              value={searchQuery}
+                              onChangeText={text => setSearchQuery(text)} />
                          <FontAwesome name='check-circle' size={18} color='grey' style={styles.search} />
                     </View>
                     {/* card agenda */}
                     <ScrollView  >
                          <View style={styles.boxAgenda}>
                               <View style={{ marginBottom: 10 }}>
-                                   <View style={styles.cardNews}>
+                                   {filteredAgenda.map(agendaData => (
+                                         <View style={styles.cardNews}>
                                         <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
                                              <Image source={require('../../../assets/kegiatan/agenda2.png')} width={95} height={95} borderRadius={5} />
                                         </View>
                                         <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Sosialisasi Perhitungan Suara Pilpres</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
+                                             <Text style={styles.judul}>{agendaData.nama_kegiatan}</Text>
+                                             <Text style={styles.waktu}>{formatDate(agendaData.tanggal_kegiatan)} </Text>
+                                             <Text style={styles.deskripsi}>{truncateText(cleanHTMLTags(agendaData.deskripsi_kegiatan), 32)}</Text>
                                              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn} onPress={goDetail}>
+                                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('agenda-detail', { id: agendaData.id })}>
                                                        <Text style={styles.btnText}>Selengkapnya</Text>
                                                   </TouchableOpacity>
                                              </View>
                                         </View>
                                    </View>
-                                   <View style={styles.cardNews}>
-                                        <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/kegiatan/agenda1.png')} width={95} height={95} borderRadius={5} />
-                                        </View>
-                                        <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Rapat Penetapan APBD</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
-                                                       <Text style={styles.btnText}>Selengkapnya</Text>
-                                                  </TouchableOpacity>
-                                             </View>
-                                        </View>
-                                   </View>
-                                   <View style={styles.cardNews}>
-                                        <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/kegiatan/agenda1.png')} width={95} height={95} borderRadius={5} />
-                                        </View>
-                                        <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Rapat Penetapan APBD</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
-                                                       <Text style={styles.btnText}>Selengkapnya</Text>
-                                                  </TouchableOpacity>
-                                             </View>
-                                        </View>
-                                   </View>
-                                   <View style={styles.cardNews}>
-                                        <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/kegiatan/agenda1.png')} width={95} height={95} borderRadius={5} />
-                                        </View>
-                                        <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Rapat Penetapan APBD</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
-                                                       <Text style={styles.btnText}>Selengkapnya</Text>
-                                                  </TouchableOpacity>
-                                             </View>
-                                        </View>
-                                   </View>
-                                   <View style={styles.cardNews}>
-                                        <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/kegiatan/agenda1.png')} width={95} height={95} borderRadius={5} />
-                                        </View>
-                                        <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Rapat Penetapan APBD</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
-                                                       <Text style={styles.btnText}>Selengkapnya</Text>
-                                                  </TouchableOpacity>
-                                             </View>
-                                        </View>
-                                   </View>
-                                   <View style={styles.cardNews}>
-                                        <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={require('../../../assets/kegiatan/agenda1.png')} width={95} height={95} borderRadius={5} />
-                                        </View>
-                                        <View style={styles.contentNews}>
-                                             <Text style={styles.judul}>Rapat Penetapan APBD</Text>
-                                             <Text style={styles.waktu}>14/06/2023</Text>
-                                             <Text style={styles.deskripsi}>Kunjungan ke PT TPL adalah pengalaman yang mendalam dalam pemahaman industri....</Text>
-                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
-                                                  <TouchableOpacity style={styles.btn}>
-                                                       <Text style={styles.btnText}>Selengkapnya</Text>
-                                                  </TouchableOpacity>
-                                             </View>
-                                        </View>
-                                   </View>
+                                   ))}
                               </View>
 
                          </View>
@@ -140,7 +102,8 @@ const styles = StyleSheet.create({
           height: 40,
           borderRadius: 30,
           width: '100%',
-          padding: 8
+          padding: 8,
+          paddingLeft:20
      },
      boxSearch: {
           flexDirection: 'row',
