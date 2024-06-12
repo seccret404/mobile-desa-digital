@@ -36,7 +36,7 @@ export default function Organisasi({ navigation }) {
   const renderList = ({ item }) => (
     <TouchableOpacity style={styles.menuItem} onPress={() => handleMenu(item.id)}>
       <View style={styles.menuItemContent}>
-        <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/organisasi/${item.logo_organisasi}` }} style={styles.img} />
+        <Image source={{ uri: `https://api-admin.desasosordolok.id/images/organisasi/${item.logo_organisasi}` }} style={styles.img} />
         <Text style={{ textAlign: 'center', fontSize: 13, fontWeight: '700', marginTop: 5, marginBottom: 18 }}>{item.nama_lembaga}</Text>
       </View>
     </TouchableOpacity>

@@ -35,7 +35,7 @@ export default function Pemerintahan({ navigation }) {
         ) : (
           pemerintah.map((item) => (
             <View key={item.id} style={styles.bg}>
-              <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${item.profil}` }} style={styles.img} />
+              <Image source={{ uri: `https://api-admin.desasosordolok.id/images/pemerintah/${item.profil}` }} style={styles.img} />
               <Text style={styles.name}>{item.nama}</Text>
               <Text style={styles.jabatan}>{item.jabatan}</Text>
             </View>

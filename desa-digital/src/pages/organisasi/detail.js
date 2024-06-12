@@ -55,7 +55,7 @@ export default function DetailOrganisasi({ navigation, route }) {
         <View style={styles.logo}>
           <View style={{flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
             <Image
-              source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/organisasi/${organisasi.logo_organisasi}` }}
+              source={{ uri: `https://api-admin.desasosordolok.id/images/organisasi/${organisasi.logo_organisasi}` }}
               style={styles.logoImage}
             />
             <Text style={styles.nama}>{organisasi.nama_lembaga}</Text>

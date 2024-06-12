@@ -53,7 +53,7 @@ export default function DetailBerita({ navigation, route }) {
         <ScrollView>
           <View style={styles.boxImg}>
             {/* Perbaikan source pada Image */}
-            <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/cover/${berita.cover}` }} style={styles.img} />
+            <Image source={{ uri: `https://api-admin.desasosordolok.id/images/cover/${berita.cover}` }} style={styles.img} />
           </View>
           <Text style={styles.title}>{berita.judul_berita}</Text>
           <Text style={styles.deskripsi}>

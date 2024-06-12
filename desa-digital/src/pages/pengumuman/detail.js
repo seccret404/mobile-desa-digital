@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View,Text,StyleSheet,ScrollView,Image } from "react-native";
 import HeaderPengumuman from "../../components/layout/headerDetailPengumuman";
 import { getPengumumanById } from "../../services/desaDigital.services";
+import { Link } from "@react-navigation/native";
 
 export default function DetailPengumuman({ navigation, route }) {
      const { id } = route.params;
@@ -51,6 +52,7 @@ export default function DetailPengumuman({ navigation, route }) {
          <HeaderPengumuman navigation={navigation} />
          <View style={styles.content}>
            <ScrollView>
+           <Image source={{ uri: `https://api-admin.desasosordolok.id/api/pengumuman_cover/${pengumuman.file_pengumuman}` }} width={400} height={150} borderRadius={5} style={{marginTop:10}} />
              <Text style={styles.title}>{pengumuman.judul_pengumuman}</Text>
              <Text style={styles.waktu}>{formatDate(pengumuman.tgl_publikasi)}</Text>
              <Text style={styles.deskripsi}>
@@ -59,7 +61,6 @@ export default function DetailPengumuman({ navigation, route }) {
              <Text style={styles.file}>File</Text>
              <View style={styles.boxfile}>
                <Text>
-                    <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/pengumuman/images/cover/${pengumuman.cover_pengumuman}` }}/>
                </Text>
              </View>
            </ScrollView>

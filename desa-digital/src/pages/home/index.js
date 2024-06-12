@@ -141,7 +141,7 @@ export default function Home({ navigation }) {
                                    {berita.map(beritaData => (
                                         <View style={styles.cardNews} key={beritaData.id}>
                                              <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                                  <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/cover/${beritaData.cover}` }} style={{ width: 95, height: 95, borderRadius: 5 }} />
+                                                  <Image source={{ uri: `https://api-admin.desasosordolok.id/images/cover/${beritaData.cover}` }} style={{ width: 95, height: 95, borderRadius: 5 }} />
                                              </View>
                                              <View style={styles.contentNews}>
                                                   <Text style={styles.judul}>{beritaData.judul_berita}</Text>
@@ -165,7 +165,7 @@ export default function Home({ navigation }) {
                                    {pengumuman.map(pengumumanData =>(
                                         <View style={styles.cardNews}>
                                         <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                             <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/pengumuman/images/cover/${pengumumanData.cover_pengumuman}` }} width={95} height={95} borderRadius={5} />
+                                             <Image source={{ uri: `https://api-admin.desasosordolok.id/pengumuman/images/cover/${pengumumanData.cover_pengumuman}` }} width={95} height={95} borderRadius={5} />
                                         </View>
                                         <View style={styles.contentNews}>
                                              <Text style={styles.judul}>{pengumumanData.judul_pengumuman}</Text>

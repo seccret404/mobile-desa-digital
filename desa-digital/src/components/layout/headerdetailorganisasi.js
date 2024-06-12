@@ -4,7 +4,7 @@ import ArrowIcon from '../../components/icon/arrowLeft';
 
 export default function HeaderOrganisasiDetail({ navigation }) {
      const goHome = () => {
-          navigation.navigate('organisai');
+          navigation.navigate('organisasi');
      };
      return (
           <View style={styles.header}>

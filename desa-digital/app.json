@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/desaku.png",
         "backgroundColor": "#0890EA"
-      }
+      },
+      "package": "com.edwardtua.desadigital"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "deecfdb3-36c2-40fa-b645-bd9a665c4107"
+      }
     }
   }
 }

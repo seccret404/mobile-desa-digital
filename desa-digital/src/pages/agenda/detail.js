@@ -77,7 +77,7 @@ export default function AgendaDetail({ navigation, route }) {
                                         showsHorizontalScrollIndicator={false}
                                         keyExtractor={(item) => item.id.toString()}
                                         renderItem={({ item }) => (
-                                             <Image source={{ uri: `https://desa-digital-backend-production.up.railway.app/images/laporan/dokumentasi/${item.dokumentasi}` }} style={{ margin: 2, width: 350 }} />
+                                             <Image source={{ uri: `https://api-admin.desasosordolok.id/images/laporan/dokumentasi/${item.dokumentasi}` }} style={{ margin: 2, width: 350 }} />
                                         )}
                                    />
 

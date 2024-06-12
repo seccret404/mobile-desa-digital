@@ -53,7 +53,7 @@ export default function AppNavigation() {
   // Jika loading sudah selesai, tampilkan aplikasi dengan NavigationContainer
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='welcome'>
+      <Stack.Navigator initialRouteName='home'>
         <Stack.Screen name='welcome' component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name='home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='agenda' component={AgendaDesa} options={{ headerShown: false }} />

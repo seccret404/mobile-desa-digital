@@ -41,7 +41,7 @@ export default function Profile({ navigation }) {
                <HeaderProfile navigation={navigation} />
                <View style={styles.content}>
                     <ScrollView>
-                         <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/images/profile/${profil.gambar_desa}`  }}  style={styles.profileImage}/>
+                         <Image source={{ uri: `https://api-admin.desasosordolok.id/api/gambardesa/${profil.gambar_desa}`  }}  style={styles.profileImage}/>
                          <Text style={styles.DesaName}>
                               {profil.nama_desa}
                          </Text>

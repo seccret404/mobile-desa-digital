@@ -58,7 +58,7 @@ export default function Pengumuman({ navigation }) {
                               {filteredPengumuman.map(pengumumanData => 
                               <View style={styles.cardNews} key={pengumumanData.id}>
                                    <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                        <Image source={{ uri: `https://desa-digital-bakend-production.up.railway.app/pengumuman/images/cover/${pengumumanData.cover}` }} width={95} height={95} borderRadius={5} />
+                                        <Image source={{ uri: `https://api-admin.desasosordolok.id/api/pengumuman_cover/${pengumumanData.file_pengumuman}` }} width={95} height={95} borderRadius={5} />
                                    </View>
                                    <View style={styles.contentNews}>
                                         <Text style={styles.judul}>{pengumumanData.judul_pengumuman}</Text>
