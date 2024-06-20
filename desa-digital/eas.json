@@ -1,18 +1,19 @@
 {
-  "cli": {
-    "version": ">= 9.2.0"
-  },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
-  },
-  "submit": {
-    "production": {}
+       "preview":{
+            "android": {
+                 "buildType": "apk"
+            }
+       },
+       "preview2":{
+            "android": {
+                 "gradleCommand": ":app:assembleRelase"
+            }
+       },
+       "preview3":{
+            "developmentClient": true
+       },
+       "production":{}
   }
 }
+

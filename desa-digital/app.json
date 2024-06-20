@@ -7,7 +7,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/desaku.png",
       "resizeMode": "contain",
       "backgroundColor": "#0890EA"
     },
@@ -15,12 +14,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.edwardtua.desadigital"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/desaku.png",
         "backgroundColor": "#0890EA"
+    
       },
       "package": "com.edwardtua.desadigital"
     },
