@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
-import HeaderHomestay from '../../../components/layout/headerHomestay';
 import MapIcon from '../../../components/icon/map';
 import PhoneIcon from '../../../components/icon/phone';
-import { getHomestay } from '../../../services/desaDigital.services';
-
-export default function Homestay({ navigation }) {
+import { getBank } from '../../../services/desaDigital.services';
+import HeaderBank from '../../../components/layout/headerBank';
+export default function Bank({ navigation }) {
     const [homeStay, setHomeStay] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchHomestay = async () => {
             try {
-                const response = await getHomestay();
-                console.log("Response from getHomestay:", response); 
+                const response = await getBank();
+                console.log("Response from bank:", response); 
 
                 if (response.code === 200) {
                     const homestayArray = Object.keys(response.data).map(key => response.data[key]);
@@ -33,7 +32,7 @@ export default function Homestay({ navigation }) {
     }, []);
 
     const goDetail = (id) => {
-        navigation.navigate('detail-homestay', { id });
+        navigation.navigate('bank-detail', { id });
     };
 
     const truncateText = (text, maxLength) => {
@@ -43,7 +42,7 @@ export default function Homestay({ navigation }) {
 
     const renderProduct = ({ item }) => (
         <TouchableOpacity style={style.bg} onPress={() => goDetail(item.id)}>
-            <Image source={{ uri: item.gambar1 }} style={style.img} />
+            <Image source={{ uri: item.gambar }} style={style.img} />
             <Text style={style.title}>{item.namaPenginapan}</Text>
             <View style={{ display: 'flex', flexDirection: 'row', margin: 5, alignItems: 'center' }}>
                 <Text style={{ fontSize: 12, color: "#8C7979" }}>{item.des}</Text>
@@ -75,7 +74,7 @@ export default function Homestay({ navigation }) {
 
     return (
         <View style={style.container}>
-            <HeaderHomestay navigation={navigation} />
+            <HeaderBank navigation={navigation} />
             <View style={style.content}>
                 <FlatList
                     data={homeStay}

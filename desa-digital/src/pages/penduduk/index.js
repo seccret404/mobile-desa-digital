@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "rea
 import HeaderPendudukUtama from "../../components/layout/headerUtamaPenduduk";
 import DusunIcon from "../../components/icon/dusun";
 import { getDusun } from "../../services/desaDigital.services";
+
 export default function Penduduk({navigation}) {
      const [dusun, setDusun] = useState([]);
 
@@ -30,7 +31,7 @@ export default function Penduduk({navigation}) {
                     <Text style={styles.bigTitle}>Statistik Data Penduduk Desa Sosor Dolok</Text>
                     <ScrollView>
                          {dusun.map(dusunData=>(
-                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('detail-dusun', { id: dusunData.id })}>
+                             <TouchableOpacity key={dusunData.id} style={styles.btn} onPress={() => navigation.navigate('detail-dusun', { id: dusunData.id })}>
                          <View style={styles.boxDusun}>
                               <View style={styles.bgDusun}>
                                    <DusunIcon size={36} />
@@ -58,8 +59,6 @@ export default function Penduduk({navigation}) {
           </View>
      )
 }
-
-
 
 const styles = StyleSheet.create({
      container: {
@@ -106,5 +105,4 @@ const styles = StyleSheet.create({
      img:{
           width:'full'
      }
-
 })

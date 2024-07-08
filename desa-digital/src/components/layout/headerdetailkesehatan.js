@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import ArrowIcon from '../../components/icon/arrowLeft';
-export default function HeaderHomestay({ navigation }) {
+
+export default function HeaderDetailKesehatan({ navigation }) {
      const navigateHome = () => {
-          navigation.navigate('fasilitas');
+          navigation.navigate('kesehatan');
      };
      return (
           <View style={styles.header}>
@@ -14,7 +15,7 @@ export default function HeaderHomestay({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         Homestay
+                         Kesehatan
                     </Text>
                </View>
 

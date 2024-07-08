@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import ArrowIcon from '../../components/icon/arrowLeft';
-export default function HeaderHomestay({ navigation }) {
+
+export default function HeaderBank({ navigation }) {
      const navigateHome = () => {
           navigation.navigate('fasilitas');
      };
@@ -14,7 +15,7 @@ export default function HeaderHomestay({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         Homestay
+                        Bank
                     </Text>
                </View>
 

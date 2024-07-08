@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import HeaderWisata from '../../../components/layout/headerwisata';
 import Footer from '../../../components/layout/footer';
-import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import wisataImg from '../../../../assets/wisata/wisata.png'
 import { getWisata } from '../../../services/desaDigital.services';
 
 export default function Wisata({ navigation }) {
@@ -13,8 +12,13 @@ export default function Wisata({ navigation }) {
         const fetchWisata = async () => {
             try {
                 const response = await getWisata();
+                console.log("Response from getWisata:", response); // Debug log to check response data
+
                 if (response.code === 200) {
-                    setWisata(response.data || []);
+                    // Convert object data to array
+                    const wisataArray = Object.values(response.data);
+                    setWisata(wisataArray);
+                    console.log("Wisata data array:", wisataArray); // Debug log to check converted data
                 } else {
                     console.error('Error fetching wisata:', response.message);
                 }
@@ -23,14 +27,16 @@ export default function Wisata({ navigation }) {
             } finally {
                 setLoading(false);
             }
-        }
+        };
 
         fetchWisata();
     }, []);
+
     const truncateText = (text, maxLength) => {
-     if (text.length <= maxLength) return text;
-     return text.substr(0, maxLength) + '...';
-};
+        if (text.length <= maxLength) return text;
+        return text.substr(0, maxLength) + '...';
+    };
+
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('detail-wisata', { id: item.id })}>
             <Image source={{ uri: item.gambar }} style={styles.img} />

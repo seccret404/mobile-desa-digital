@@ -27,7 +27,7 @@ export default function Anggaran({navigation}){
                     <Text style={styles.bigTitle}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun 2024</Text>
                     <ScrollView>
                          {anggaran.map(anggaranData => (
-                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('anggaran-detail', { id: anggaranData.id })}>
+                             <TouchableOpacity key={anggaranData.id} style={styles.btn} onPress={() => navigation.navigate('anggaran-detail', { id: anggaranData.id })}>
                             <View style={styles.box}>
                               <Text style={styles.title}>Rencana Anggaran Pendapatan dan Belanja Desa (RAPBDes) Tahun {anggaranData.tahun_anggaran}</Text>
                               <RightIcon/>

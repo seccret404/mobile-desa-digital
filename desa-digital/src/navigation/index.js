@@ -32,29 +32,20 @@ import DetailIbadah from '../pages/potensi/fasilitas/detailIbadah';
 import Profile from '../pages/desa/profile';
 import Pemerintahan from '../pages/desa/pemerintahan';
 import DetailMakanan from '../pages/potensi/umkm/detailMakanan';
+import Kesehatan from '../pages/potensi/fasilitas/kesehatan';
+import DetailKesehatan from '../pages/potensi/fasilitas/detailKesehatan';
+import RumahMakan from '../pages/potensi/fasilitas/rumahmakan';
+import DetailRumahMakan from '../pages/potensi/fasilitas/detailrumahmakan';
+import Bank from '../pages/potensi/fasilitas/bank';
+import DetailBank from '../pages/potensi/fasilitas/detailBank';
 
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulasikan penundaan dengan setTimeout
-    setTimeout(() => {
-      setLoading(false); // Hentikan loading setelah beberapa waktu
-    }, 2000); // Ganti dengan waktu yang sesuai dengan kebutuhan Anda
-  }, []);
-
-  if (loading) {
-    // Jika masih dalam tahap loading, tampilkan halaman loading
-    return <LoadingPage />;
-  }
-
-  // Jika loading sudah selesai, tampilkan aplikasi dengan NavigationContainer
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='home'>
-        <Stack.Screen name='welcome' component={Welcome} options={{ headerShown: false }} />
+        {/* <Stack.Screen name='welcome' component={Welcome} options={{ headerShown: false }} /> */}
         <Stack.Screen name='home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='agenda' component={AgendaDesa} options={{ headerShown: false }} />
         <Stack.Screen name='agenda-detail' component={AgendaDetail} options={{ headerShown: false }} />
@@ -83,6 +74,12 @@ export default function AppNavigation() {
         <Stack.Screen name='detail-ibadah' component={DetailIbadah} options={{headerShown:false}} />
         <Stack.Screen name='profile' component={Profile} options={{headerShown:false}} />
         <Stack.Screen name='pemerintahan' component={Pemerintahan} options={{headerShown:false}} />
+        <Stack.Screen name='kesehatan' component={Kesehatan} options={{headerShown:false}} />
+        <Stack.Screen name='bank' component={Bank} options={{headerShown:false}} />
+        <Stack.Screen name='rumah-makan' component={RumahMakan} options={{headerShown:false}} />
+        <Stack.Screen name='kesehatan-detail' component={DetailKesehatan} options={{headerShown:false}} />
+        <Stack.Screen name='bank-detail' component={DetailBank} options={{headerShown:false}} />
+        <Stack.Screen name='rumah-makan-detail' component={DetailRumahMakan} options={{headerShown:false}} />
       </Stack.Navigator>
       <StatusBar backgroundColor='#ffffff' style='dark' translucent={false} />
     </NavigationContainer>

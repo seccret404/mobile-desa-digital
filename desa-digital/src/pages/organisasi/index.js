@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, ScrollView, FlatList, TouchableOpacity, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import HeaderOrganisasi from "../../components/layout/headerorganisasi";
 import { FontAwesome } from '@expo/vector-icons';
 import { getOrganisasi } from "../../services/desaDigital.services";
@@ -56,16 +56,12 @@ export default function Organisasi({ navigation }) {
           />
           <FontAwesome name='search' size={18} color='grey' style={styles.search} />
         </View>
-        <ScrollView>
-          <View>
-            <FlatList
-              data={filteredOrganisasi}
-              renderItem={renderList}
-              keyExtractor={item => item.id.toString()}
-              numColumns={numColumns}
-            />
-          </View>
-        </ScrollView>
+        <FlatList
+          data={filteredOrganisasi}
+          renderItem={renderList}
+          keyExtractor={item => item.id.toString()}
+          numColumns={numColumns}
+        />
       </View>
     </View>
   )

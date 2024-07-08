@@ -38,7 +38,7 @@ export default function DetailBerita({ navigation, route }) {
 
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) return text;
-    return text.substr(0, maxLength) + '...';
+    return text.substr(0, maxLength) + '';
   };
 
   const formatDate = (tgl) => {
@@ -57,7 +57,7 @@ export default function DetailBerita({ navigation, route }) {
           </View>
           <Text style={styles.title}>{berita.judul_berita}</Text>
           <Text style={styles.deskripsi}>
-            {truncateText(cleanHTMLTags(berita.isi_berita), 32)}
+            {truncateText(cleanHTMLTags(berita.isi_berita))}
           </Text>
         </ScrollView>
       </View>

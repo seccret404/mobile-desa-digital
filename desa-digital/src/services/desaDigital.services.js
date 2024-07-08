@@ -237,25 +237,27 @@ export const getDusunById= async (id) => {
 
 //Desa-Wisata-C-API
 
-export const getWisata= async () => {
+export const getWisata = async () => {
   try {
-    const response = await fetch(`${API_WISATA}/ObjekWisata`);
-    const text = await response.text();
-    
-    // Debug log to check the response
-    console.log("Raw response:", text);
+      const response = await fetch(`${API_WISATA}/ObjekWisata`);
+      const text = await response.text();
+      
+      // Debug log to check the response
+      console.log("Raw response:", text);
 
-    // Attempt to parse JSON only if the response is JSON
-    if (response.headers.get('content-type')?.includes('application/json')) {
-        return JSON.parse(text);
-    } else {
-        throw new Error('Response is not JSON');
-    }
-} catch (error) {
-    console.error('Error fetching wisata:', error);
-    throw error;
-}
+      // Attempt to parse JSON only if the response is JSON
+      if (response.headers.get('content-type')?.includes('application/json')) {
+          return JSON.parse(text);
+      } else {
+          throw new Error('Response is not JSON');
+      }
+  } catch (error) {
+      console.error('Error fetching wisata:', error);
+      throw error;
+  }
 };
+
+
 
 export const getUmkmMakanan= async () => {
   try {
@@ -371,23 +373,76 @@ export const getIbdah= async () => {
     throw error;
 }
 };
-export const getHomestay= async () => {
+export const getHomestay = async () => {
   try {
     const response = await fetch(`${API_WISATA}/fasilitas/homestay`);
     const text = await response.text();
     
-    console.log("Raw response:", text);
+    console.log("Raw response:", text); 
 
     if (response.headers.get('content-type')?.includes('application/json')) {
         return JSON.parse(text);
     } else {
         throw new Error('Response is not JSON');
     }
-} catch (error) {
+  } catch (error) {
     console.error('Error fetching fasilitas:', error);
     throw error;
-}
+  }
 };
+
+export const getKesehatan = async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/fasilitas-kesehatan`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text); 
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching fasilitas:', error);
+    throw error;
+  }
+};
+export const getRumahMakan = async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/rumah-makan`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text); 
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching rumah-makan:', error);
+    throw error;
+  }
+};
+export const getBank = async () => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/bank`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text); 
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        return JSON.parse(text);
+    } else {
+        throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching bank:', error);
+    throw error;
+  }
+};
+
 export const getIbadahDetail = async (id) => {
   try {
     const response = await fetch(`${API_WISATA}/fasilitas/rumah-ibadah/${id}`);
@@ -410,7 +465,7 @@ export const getIbadahDetail = async (id) => {
 
 
 
-export const getHomestayDetail= async (id) => {
+export const getHomestayDetail = async (id) => {
   try {
     const response = await fetch(`${API_WISATA}/fasilitas/homestay/${id}`);
     const text = await response.text();
@@ -418,14 +473,75 @@ export const getHomestayDetail= async (id) => {
     console.log("Raw response:", text);
 
     if (response.headers.get('content-type')?.includes('application/json')) {
-        return JSON.parse(text);
+        const data = JSON.parse(text);
+        console.log("Parsed response:", data);
+        return data;
     } else {
         throw new Error('Response is not JSON');
     }
-} catch (error) {
+  } catch (error) {
     console.error('Error fetching wisata:', error);
     throw error;
-}
+  }
+};
+
+export const getKesehatanDetail = async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/fasilitas-kesehatan/${id}`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        const data = JSON.parse(text);
+        console.log("Parsed response:", data);
+        return data;
+    } else {
+        throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching kesehatan:', error);
+    throw error;
+  }
+};
+export const getRumahMakanDetail = async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/rumah-makan/${id}`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        const data = JSON.parse(text);
+        console.log("Parsed response:", data);
+        return data;
+    } else {
+        throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching RM:', error);
+    throw error;
+  }
+};
+
+export const getBankDetail = async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/fasilitas/bank/${id}`);
+    const text = await response.text();
+    
+    console.log("Raw response:", text);
+
+    if (response.headers.get('content-type')?.includes('application/json')) {
+        const data = JSON.parse(text);
+        console.log("Parsed response:", data);
+        return data;
+    } else {
+        throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching bank:', error);
+    throw error;
+  }
 };
 
 

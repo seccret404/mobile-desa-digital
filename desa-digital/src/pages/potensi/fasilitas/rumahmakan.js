@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
-import HeaderHomestay from '../../../components/layout/headerHomestay';
 import MapIcon from '../../../components/icon/map';
 import PhoneIcon from '../../../components/icon/phone';
-import { getHomestay } from '../../../services/desaDigital.services';
-
-export default function Homestay({ navigation }) {
+import { getRumahMakan } from '../../../services/desaDigital.services';
+import HeaderRumahMakan from '../../../components/layout/headerrumahmakan';
+export default function RumahMakan({ navigation }) {
     const [homeStay, setHomeStay] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchHomestay = async () => {
             try {
-                const response = await getHomestay();
+                const response = await getRumahMakan();
                 console.log("Response from getHomestay:", response); 
 
                 if (response.code === 200) {
@@ -33,7 +32,7 @@ export default function Homestay({ navigation }) {
     }, []);
 
     const goDetail = (id) => {
-        navigation.navigate('detail-homestay', { id });
+        navigation.navigate('rumah-makan-detail', { id });
     };
 
     const truncateText = (text, maxLength) => {
@@ -43,16 +42,13 @@ export default function Homestay({ navigation }) {
 
     const renderProduct = ({ item }) => (
         <TouchableOpacity style={style.bg} onPress={() => goDetail(item.id)}>
-            <Image source={{ uri: item.gambar1 }} style={style.img} />
-            <Text style={style.title}>{item.namaPenginapan}</Text>
+            <Image source={{ uri: item.gambar }} style={style.img} />
+            <Text style={style.title}>{item.namaRumahMakan}</Text>
             <View style={{ display: 'flex', flexDirection: 'row', margin: 5, alignItems: 'center' }}>
                 <Text style={{ fontSize: 12, color: "#8C7979" }}>{item.des}</Text>
                 <Text style={style.price}>{truncateText(item.deskripsi, 50)}</Text>
             </View>
-            <View style={style.location}>
-                <PhoneIcon />
-                <Text style={style.txtLocation}>{item.kontak}</Text>
-            </View>
+           
             <View style={style.location}>
                 <MapIcon />
                 <Text style={style.txtLocation}>{item.lokasi}</Text>
@@ -75,7 +71,7 @@ export default function Homestay({ navigation }) {
 
     return (
         <View style={style.container}>
-            <HeaderHomestay navigation={navigation} />
+            <HeaderRumahMakan navigation={navigation} />
             <View style={style.content}>
                 <FlatList
                     data={homeStay}

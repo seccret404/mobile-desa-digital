@@ -39,7 +39,7 @@ export default function DetailPengumuman({ navigation, route }) {
 
      const truncateText = (text, maxLength) => {
           if (text.length <= maxLength) return text;
-          return text.substr(0, maxLength) + '...';
+          return text.substr(0, maxLength) + '';
      };
 
      const formatDate = (tgl) => {
@@ -56,7 +56,7 @@ export default function DetailPengumuman({ navigation, route }) {
              <Text style={styles.title}>{pengumuman.judul_pengumuman}</Text>
              <Text style={styles.waktu}>{formatDate(pengumuman.tgl_publikasi)}</Text>
              <Text style={styles.deskripsi}>
-             {truncateText(cleanHTMLTags(pengumuman.deskripsi_pengumuman), 32)}
+             {truncateText(cleanHTMLTags(pengumuman.deskripsi_pengumuman))}
              </Text>
              <Text style={styles.file}>File</Text>
              <View style={styles.boxfile}>

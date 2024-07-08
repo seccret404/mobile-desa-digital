@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../../../components/layout/footer';
 import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import h1 from '../../../../assets/fasilitas/h1.png';
-import HeaderDetailHomestay from '../../../components/layout/headerDetailHomstay';
-import WifIcon from '../../../components/icon/wifiIcon';
-import ToiIcon from '../../../components/icon/toiletIcon';
-import CsIcon from '../../../components/icon/csIcon';
-import CpIcon from '../../../components/icon/cpIcon';
-import AcIcon from '../../../components/icon/acIcon';
-import BfIcon from '../../../components/icon/bfIcon';
 import PhoneIcon from '../../../components/icon/phone';
-import MailIcon from '../../../components/icon/mail';
-import { getHomestayDetail } from '../../../services/desaDigital.services';
-
-const formatPrice = (price) => {
-    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
-};
-
-export default function DetailHomestay({ navigation, route }) {
+import { getBankDetail } from '../../../services/desaDigital.services';
+import MapIcon from '../../../components/icon/map';
+import HeaderBank from '../../../components/layout/headerBank';
+export default function DetailBank({ navigation, route }) {
     const { id } = route.params;
     const [homestayDetail, setHomestayDetail] = useState(null); // default to null
     const [loading, setLoading] = useState(true);
@@ -25,7 +13,7 @@ export default function DetailHomestay({ navigation, route }) {
     useEffect(() => {
         const fetchDetail = async () => {
             try {
-                const detail = await getHomestayDetail(id);
+                const detail = await getBankDetail(id);
                 console.log("Fetched detail:", detail);
 
                 if (detail && detail.data) {
@@ -60,69 +48,36 @@ export default function DetailHomestay({ navigation, route }) {
         );
     }
 
+    const goHomestay = () => {
+        navigation.navigate('homestay');
+    };
+
     return (
         <View style={styles.container}>
-            <HeaderDetailHomestay navigation={navigation} />
+            <HeaderBank navigation={navigation} />
             <View style={styles.content}>
                 <ScrollView>
-                    <Image source={{uri:homestayDetail.gambar3}} style={styles.img} />
+                    <Image source={{ uri: homestayDetail.gambar }} style={styles.img} />
                     <Text style={styles.title}>
-                        {homestayDetail.namaPenginapan}
+                        {homestayDetail.namaBank}
                     </Text>
                     <Text style={styles.des}>
                         {homestayDetail.deskripsi}
                     </Text>
+                    <Text style={styles.lokasi}>
+                     <MapIcon/> {homestayDetail.lokasi}
+                    </Text>
                     <Text style={styles.subtitle}>
-                        Mulai Dari
+                       Waktu Beroperasi
                     </Text>
                     <View style={styles.priceBox}>
-                        <Text style={styles.prise}>{formatPrice(homestayDetail.harga)}</Text>
-                        <Text style={styles.priseR}>kamar/malam</Text>
-                    </View>
-                    <Text style={styles.subtitle}>
-                        Fasilitas
-                    </Text>
-                    <View style={styles.boxF}>
-                        <WifIcon />
-                        <Text style={styles.ket}>
-                            {homestayDetail.wifi}
-                        </Text>
-                    </View>
-                    <View style={styles.boxF}>
-                        <ToiIcon />
-                        <Text style={styles.ket}>
-                            {homestayDetail.toilet}
-                        </Text>
-                    </View>
-                    <View style={styles.boxF}>
-                        <CsIcon />
-                        <Text style={styles.ket}>
-                            {homestayDetail.contactPerson}
-                        </Text>
-                    </View>
-                    <View style={styles.boxF}>
-                        <CpIcon />
-                        <Text style={styles.ket}>
-                            {homestayDetail.cleaningService}
-                        </Text>
-                    </View>
-                    <View style={styles.boxF}>
-                        <AcIcon />
-                        <Text style={styles.ket}>
-                            {homestayDetail.ac}
-                        </Text>
-                    </View>
-                    <View style={styles.boxF}>
-                        <BfIcon />
-                        <Text style={styles.ket}>
-                            {homestayDetail.breakfast}
-                        </Text>
+                        <Text style={styles.priseR}>Pukul {homestayDetail.jamBuka} - {homestayDetail.jamTutup} / {homestayDetail.waktuOperasi}</Text>
                     </View>
                     <Text style={styles.subtitle}>
                         For More Information
                     </Text>
                     <Text style={styles.des}>
-                        Jika anda pertanyaan seputar Homestay Silahkan hubungi kontak dibawah ini:
+                       {homestayDetail.isiKonten}
                     </Text>
                     <View style={styles.boxF}>
                         <PhoneIcon size={21} />
@@ -158,6 +113,12 @@ const styles = StyleSheet.create({
     },
     des: {
         textAlign: 'justify',
+    },
+    lokasi:{
+          display:'flex', 
+          flexDirection:"row",
+          alignItems:"center",
+          marginTop:10
     },
     subtitle: {
         fontSize: 16,

@@ -14,6 +14,15 @@ export default function Fasilitas({ navigation }) {
      const goIbadah = () => {
           navigation.navigate('ibadah')
      }
+     const goKesehatan = () => {
+          navigation.navigate('kesehatan')
+     }
+     const goMakanan = () => {
+          navigation.navigate('rumah-makan')
+     }
+     const goBank = () => {
+          navigation.navigate('bank')
+     }
      return (
           <View style={styles.container}>
                <HeaderFasilitas navigation={navigation} />
@@ -21,8 +30,11 @@ export default function Fasilitas({ navigation }) {
                    <ScrollView>
                    <View style={styles.box}>
                          <View>
-                              <Image source={kesehatan} />
+                              <TouchableOpacity onPress={goKesehatan}>
+                                    <Image source={kesehatan} />
                               <Text style={styles.txt}>Kesehatan</Text>
+                              </TouchableOpacity>
+                             
                          </View>
                          <View>
                               <TouchableOpacity onPress={goIbadah}>
@@ -42,12 +54,18 @@ export default function Fasilitas({ navigation }) {
                     </View>
                     <View style={styles.box}>
                          <View>
-                              <Image source={makan} />
-                              <Text style={styles.txt}>Rumah Makan</Text>
+                              <TouchableOpacity onPress={goMakanan}>
+                                 <Image source={makan} />
+                              <Text style={styles.txt}>Rumah Makan</Text>  
+                              </TouchableOpacity>
+                              
                          </View>
                          <View>
+                              <TouchableOpacity onPress={goBank}>
                               <Image source={bank}/>
                               <Text style={styles.txt}>Bank</Text>
+                              </TouchableOpacity>
+                              
                          </View>
                     </View>
                    </ScrollView>

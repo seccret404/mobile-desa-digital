@@ -22,7 +22,14 @@
         "backgroundColor": "#0890EA"
     
       },
-      "package": "com.edwardtua.desadigital"
+      "package": "com.edwardtua.desadigital",
+      "permissions": [
+      "CAMERA",
+      "ACCESS_FINE_LOCATION",
+      "INTERNET",
+      "READ_EXTERNAL_STORAGE",
+      "WRITE_EXTERNAL_STORAGE"
+    ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
