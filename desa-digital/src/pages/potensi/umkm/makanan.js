@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, ActivityIndicator } from 'react-native';
 import HeaderMakanan from '../../../components/layout/headermakanan';
-import MapIcon from '../../../components/icon/map';
 import { getUmkmMakanan } from '../../../services/desaDigital.services';
 import PhoneIcon from '../../../components/icon/phone';
 import PersonChekIcon from '../../../components/icon/checkperson';
@@ -29,13 +28,12 @@ export default function UmkmMakanan({ navigation }) {
     fetchMakanan();
   }, []);
 
-  const goMakanan = () => {
-    // navigation.navigate('detail-makanan');
-    navigation.navigate('');
+  const goToDetail = (id) => {
+    navigation.navigate('detail-umkm', { id });
   };
 
   const renderProduct = ({ item }) => (
-    <TouchableOpacity style={style.bg} >
+    <TouchableOpacity style={style.bg} onPress={() => goToDetail(item.id)}>
       <Image source={{ uri: item.gambar || '' }} style={style.img} />
       <Text style={style.title}>{item.namaProduk}</Text>
       <Text style={style.price}>{item.harga}</Text>

@@ -32,8 +32,12 @@ export default function UmkmPakaian({ navigation }) {
     fetchPakaian();
   }, []);
 
+  const goToDetail = (id) => {
+    navigation.navigate('detail-umkm', { id });
+  };
+
   const renderProduct = ({ item }) => (
-    <TouchableOpacity style={style.bg}>
+    <TouchableOpacity style={style.bg} onPress={() => goToDetail(item.id)}>
       <Image source={{ uri: item.gambar || '' }} style={style.img} />
       <Text style={style.title}>{item.namaProduk}</Text>
       <Text style={style.price}>{formatPrice(item.harga)}</Text>

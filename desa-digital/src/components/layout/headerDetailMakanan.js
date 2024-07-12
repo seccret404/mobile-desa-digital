@@ -4,7 +4,7 @@ import ArrowIcon from '../../components/icon/arrowLeft';
 
 export default function HeaderDetailMakanan({ navigation }) {
      const navigateHome = () => {
-          navigation.navigate('makanan');
+          navigation.navigate('umkm');
      };
      return (
           <View style={styles.header}>

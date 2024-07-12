@@ -31,7 +31,7 @@ import Ibadah from '../pages/potensi/fasilitas/ibadah';
 import DetailIbadah from '../pages/potensi/fasilitas/detailIbadah';
 import Profile from '../pages/desa/profile';
 import Pemerintahan from '../pages/desa/pemerintahan';
-import DetailMakanan from '../pages/potensi/umkm/detailMakanan';
+import DetailUmkm from '../pages/potensi/umkm/detailMakanan';
 import Kesehatan from '../pages/potensi/fasilitas/kesehatan';
 import DetailKesehatan from '../pages/potensi/fasilitas/detailKesehatan';
 import RumahMakan from '../pages/potensi/fasilitas/rumahmakan';
@@ -64,7 +64,7 @@ export default function AppNavigation() {
         <Stack.Screen name='detail-wisata' component={DetailWisata} options={{headerShown:false}} />
         <Stack.Screen name='umkm' component={UMKM} options={{headerShown:false}} />
         <Stack.Screen name='umkm-makanan' component={UmkmMakanan} options={{headerShown:false}} />
-        <Stack.Screen name='detail-makanan' component={DetailMakanan} options={{headerShown:false}} />
+        <Stack.Screen name='detail-umkm' component={DetailUmkm} options={{headerShown:false}} />
         <Stack.Screen name='umkm-suvenir' component={UmkmSuvenir} options={{headerShown:false}} />
         <Stack.Screen name='umkm-pakaian' component={UmkmPakaian} options={{headerShown:false}} />
         <Stack.Screen name='fasilitas' component={Fasilitas} options={{headerShown:false}} />

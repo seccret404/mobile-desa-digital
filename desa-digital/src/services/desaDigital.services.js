@@ -465,6 +465,28 @@ export const getIbadahDetail = async (id) => {
 
 
 
+export const getUmkmDetail = async (id) => {
+  try {
+    const response = await fetch(`${API_WISATA}/umkm/produk/${id}`);
+    const text = await response.text();
+
+    // Debug log to check the response
+    console.log("Raw response for detail:", text);
+
+    // Attempt to parse JSON only if the response is JSON
+    if (response.headers.get('content-type')?.includes('application/json')) {
+      return JSON.parse(text);
+    } else {
+      throw new Error('Response is not JSON');
+    }
+  } catch (error) {
+    console.error('Error fetching fasilitas detail:', error);
+    throw error;
+  }
+};
+
+
+
 export const getHomestayDetail = async (id) => {
   try {
     const response = await fetch(`${API_WISATA}/fasilitas/homestay/${id}`);
