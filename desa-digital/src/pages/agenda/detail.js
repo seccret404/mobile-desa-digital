@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, FlatList } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import DetailAgenda from "../../components/layout/headerdetailagenda";
 import MapIcon from '../../components/icon/map';
 import PersonCheckIcon from '../../components/icon/checkperson';
@@ -71,16 +71,15 @@ export default function AgendaDetail({ navigation, route }) {
                             <Text style={styles.deskripsi}>{agenda.deskripsi_kegiatan}</Text>
 
                             <Text style={{ fontSize: 16, fontWeight: '700', marginTop: 21, marginBottom: 9 }}>Dokumentasi Kegiatan</Text>
-                            <FlatList
-                                data={laporan}
-                                horizontal
-                                pagingEnabled
-                                showsHorizontalScrollIndicator={false}
-                                keyExtractor={(item) => item.id.toString()}
-                                renderItem={({ item }) => (
-                                    <Image source={{ uri: `https://api-admin.desasosordolok.id/images/laporan/dokumentasi/${item.dokumentasi}` }} style={{ margin: 2, width: 350 }} />
-                                )}
-                            />
+                        
+                            {laporan.length > 0 && laporan[0].dokumentasi ? (
+                                <Image
+                                    source={{ uri: `https://api-admin.desasosordolok.id/api/dokumentasi/${laporan[0].dokumentasi}` }}
+                                    style={styles.img}
+                                />
+                            ) : (
+                                <Text>Tidak ada dokumentasi</Text>
+                            )}
 
                             <View style={styles.peserta}>
                                 <View>
@@ -180,9 +179,9 @@ const styles = StyleSheet.create({
         marginBottom: 21
     },
     img: {
-        width: '100%',
-        height: 182,
-        borderRadius: 5
+        width: 350,
+        height: 200,
+        margin: 2
     },
     boxAnggaran1: {
         display: 'flex',

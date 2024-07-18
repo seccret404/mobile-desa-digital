@@ -10,13 +10,14 @@ import PengumumanIcon from '../../components/icon/pengumuman';
 import ApbdesIcon from '../../components/icon/apbdes';
 import PendudukIcon from '../../components/icon/penduduk';
 import BeritaIcon from '../../components/icon/berita';
-import { fetchDusun, getBerita, getPengumuman } from '../../services/desaDigital.services';
+import { fetchDusun, getBerita, getPengumuman, getPenduduk } from '../../services/desaDigital.services';
 
 export default function Home({ navigation }) {
      const [numColumns, setNumColumns] = useState(3);
      const [userList, setUserList] = useState([]);
      const [pengumuman, setPengumuman] = useState([]);
      const [berita, setBerita] = useState([]);
+     const [penduduk, setPenduduk] = useState({ total: 0, laki: 0, perempuan: 0 });
 
      useEffect(() => {
           const fetchBerita = async () => {
@@ -55,6 +56,22 @@ export default function Home({ navigation }) {
           };
           fetchData();
      }, []);
+
+     useEffect(() => {
+          const fetchPendudukData = async () => {
+              try {
+                  const data = await getPenduduk();
+                  const total = data.length;
+                  const laki = data.filter(item => item.jenis_kelamin === 'Laki-laki').length;
+                  const perempuan = data.filter(item => item.jenis_kelamin === 'Perempuan').length;
+                  setPenduduk({ total, laki, perempuan });
+              } catch (error) {
+                  console.error('Error fetching penduduk data:', error);
+              }
+          };
+          fetchPendudukData();
+      }, []);
+  
 
      const menu = [
           { key: 1, icon: <AgendaIcon />, namaMenu: 'Agenda Desa', route: 'agenda' },
@@ -99,7 +116,7 @@ export default function Home({ navigation }) {
           { key: 'menu', type: 'menu' },
           { key: 'beritaTitle', type: 'title', title: 'Berita Desa terbaru' },
           ...berita.map(beritaData => ({ key: `berita-${beritaData.id}`, type: 'berita', data: beritaData })),
-          { key: 'pengumumanTitle', type: 'title', title: 'Agenda Desa terbaru' },
+          { key: 'pengumumanTitle', type: 'title', title: 'Pengumuman terbaru' },
           ...pengumuman.map(pengumumanData => ({ key: `pengumuman-${pengumumanData.id}`, type: 'pengumuman', data: pengumumanData }))
      ];
 
@@ -177,7 +194,7 @@ export default function Home({ navigation }) {
                                              <Text style={styles.title}>Total Penduduk</Text>
                                              <View style={styles.countP}>
                                                   <UserIcon color='#ffffff' />
-                                                  <Text style={styles.count}>3.567 Jiwa</Text>
+                                                  <Text style={styles.count}>{penduduk.total} Jiwa</Text>
                                              </View>
                                         </View>
                                    </View>
@@ -185,9 +202,9 @@ export default function Home({ navigation }) {
                                         <View style={styles.box}>
                                              <Text style={styles.title}>Statistik Penduduk</Text>
                                              <View style={styles.countLP}>
-                                                  <Text style={{ fontSize: 12, color: '#ffffff', width: 62 }}>1.345 Jiwa  Perempuan</Text>
+                                                  <Text style={{ fontSize: 12, color: '#ffffff', width: 62 }}>{penduduk.perempuan} Jiwa  Perempuan</Text>
                                                   <Text style={{ fontSize: 40, color: '#ffffff', }}>|</Text>
-                                                  <Text style={{ fontSize: 12, color: '#ffffff', width: 62 }}>1.345 Jiwa Laki-laki</Text>
+                                                  <Text style={{ fontSize: 12, color: '#ffffff', width: 62 }}>{penduduk.laki} Jiwa Laki-laki</Text>
                                              </View>
                                         </View>
                                    </View>
@@ -274,7 +291,7 @@ const styles = StyleSheet.create({
      },
      titleNews: {
           backgroundColor: 'rgba(13, 146, 118, 0.09)',
-          width: 136,
+          width: 160,
           borderRadius: 15,
           height: 23,
           marginLeft: 15,
@@ -310,7 +327,7 @@ const styles = StyleSheet.create({
           fontSize: 12,
      },
      cardNews: {
-          width: 330,
+          width: 365,
           display: 'flex',
           flexDirection: 'row',
           backgroundColor: '#ffffff',

@@ -15,7 +15,7 @@ export default function HeaderDetailMakanan({ navigation }) {
                </View>
                <View>
                     <Text style={styles.title}>
-                         Detail Makanan
+                         Detail Produk
                     </Text>
                </View>
 
