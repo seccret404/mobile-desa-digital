@@ -161,7 +161,7 @@ export default function Home({ navigation }) {
                return (
                     <View style={styles.cardNews} key={pengumumanData.id}>
                          <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7, width:100  }}>
-                              <Image source={require('../../../assets/favicon.png')} width={12} />
+                         <Image source={{ uri: `https://api-admin.desasosordolok.id/api/pengumuman_cover/${pengumumanData.file_pengumuman}` }} width={85} height={85} borderRadius={5} />
                          </View>
                          <View style={styles.contentNews}>
                               <Text style={styles.judul}>{pengumumanData.judul_pengumuman}</Text>
