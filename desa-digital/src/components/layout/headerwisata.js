@@ -4,16 +4,11 @@ import ArrowIcon from '../../components/icon/arrowLeft';
 
 
 export default function HeaderWisata({ navigation }) {
-     const navigateHome = () => {
-          navigation.navigate('home');
-     };
+     
      return (
           <View style={styles.header}>
-               <View style={styles.logo}>
-                    <TouchableOpacity onPress={navigateHome}>
-                    <ArrowIcon size={34}  color="#ffffff" />
-
-                    </TouchableOpacity>
+                 <View style={styles.logo}>
+                    <Image source={require("../../../assets/logo.png")} />
                </View>
                <View>
                     <Text style={styles.title}>

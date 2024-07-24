@@ -8,10 +8,8 @@ export default function HeaderProfile({ navigation }) {
      };
      return (
           <View style={styles.header}>
-               <View style={styles.logo}>
-                    <TouchableOpacity onPress={navigateHome}>
-                    <ArrowIcon size={34}  color="#ffffff" />
-                    </TouchableOpacity>
+                 <View style={styles.logo}>
+                    <Image source={require("../../../assets/logo.png")} />
                </View>
                <View>
                     <Text style={styles.title}>
@@ -35,6 +33,8 @@ const styles = StyleSheet.create({
      title: {
           fontSize: 20,
           color: '#ffffff',
+          width:'100%',
+          textAlign:'center'
 
      },
      logo: {

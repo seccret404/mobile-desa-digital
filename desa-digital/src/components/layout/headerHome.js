@@ -30,9 +30,11 @@ const styles = StyleSheet.create({
      },
      desa:{
           display:'flex',
-          marginLeft:80,
+          marginLeft:70,
           color:'#ffffff',
-          fontSize:16.55
+          fontSize:20,
+          width:'100%',
+          textAlign:'center'
      }
      
 

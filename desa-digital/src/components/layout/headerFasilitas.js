@@ -5,7 +5,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 export default function HeaderFasilitas() {
      return (
           <View style={styles.header}>
-               <View style={styles.logo}>
+                 <View style={styles.logo}>
                     <Image source={require("../../../assets/logo.png")} />
                </View>
                <View >
@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
           display:'flex',
           marginLeft:80,
           color:'#ffffff',
-          fontSize:16.55
+          fontSize:20,
+          textAlign:'center',
+          width:'100%'
      }
      
 

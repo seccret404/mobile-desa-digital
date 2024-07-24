@@ -60,14 +60,12 @@ export default function AgendaDesa({ navigation }) {
                         <View style={{ marginBottom: 10 }}>
                             {filteredAgenda.map((agendaData) => (
                                 <View key={agendaData.id} style={styles.cardNews}>
-                                    <View style={{ paddingLeft: 16, paddingTop: 7, paddingBottom: 7 }}>
-                                        <Image source={require('../../../assets/kegiatan/agenda2.png')} width={95} height={95} borderRadius={5} />
-                                    </View>
+                                    
                                     <View style={styles.contentNews}>
                                         <Text style={styles.judul}>{agendaData.nama_kegiatan}</Text>
                                         <Text style={styles.waktu}>{formatDate(agendaData.tanggal_kegiatan)} </Text>
-                                        <Text style={styles.deskripsi}>{truncateText(cleanHTMLTags(agendaData.deskripsi_kegiatan), 32)}</Text>
-                                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 195 }}>
+                                        <Text style={styles.deskripsi}>{truncateText(cleanHTMLTags(agendaData.deskripsi_kegiatan), 100)}</Text>
+                                        <View style={styles.boxbtn}>
                                             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('agenda-detail', { id: agendaData.id })}>
                                                 <Text style={styles.btnText}>Selengkapnya</Text>
                                             </TouchableOpacity>
@@ -128,8 +126,7 @@ const styles = StyleSheet.create({
     },
     contentNews: {
         marginLeft: 5,
-        width: 195,
-        paddingRight: 16,
+        width: 'full',
         paddingTop: 7,
         paddingBottom: 7
     },
@@ -143,7 +140,7 @@ const styles = StyleSheet.create({
     },
     deskripsi: {
         fontSize: 12,
-        width: 195
+        textAlign:'justify'
     },
     btn: {
         backgroundColor: '#0890EA',
@@ -164,5 +161,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    boxbtn:{
+        display:'flex',
+        flexDirection:"row",
+        justifyContent:'flex-end',
+        width: '100%',
     }
 });
